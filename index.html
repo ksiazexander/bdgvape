@@ -41,7 +41,7 @@
             width: auto;
             border-radius: 10px;
             flex-shrink: 0;
-            object-fit: cover;
+            object-fit: contain;
             display: block;
         }
         
@@ -80,7 +80,6 @@
         .modal h3 { color: #fff; font-size: 1.1rem; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 4px; font-weight: 700; }
         .modal p { color: #ccc; font-size: 1.1rem; font-weight: 500; letter-spacing: 1px; }
 
-        /* Nowy przycisk IG w modalu Kontakt */
         .btn-ig {
             display: inline-block;
             background: #fff;
@@ -219,9 +218,9 @@
             .btn-ig { padding: 11px 22px; font-size: 0.75rem; letter-spacing: 2px; }
             
             .hero { padding: 40px 20px 40px 20px; }
-            .hero .tytul-z-gifem { gap: 10px; flex-wrap: nowrap; }
+            .hero .tytul-z-gifem { gap: 12px; flex-wrap: nowrap; }
             .hero h1 { font-size: 1.8rem; letter-spacing: 2px; }
-            .hero .film { height: 55px; }
+            .hero .film { height: 70px; }
             .hero .top-info { letter-spacing: 3px; font-size: 0.7rem; }
             .sekcja { padding: 40px 20px 60px 20px; }
             .sekcja h2 { font-size: 1.5rem; letter-spacing: 2px; }
@@ -251,9 +250,7 @@
         
         <div class="tytul-z-gifem">
             <h1>BDGVAPE</h1>
-            <video class="film" autoplay loop muted playsinline>
-                <source src="https://media.discordapp.net/attachments/1553798187205267456/1553858362368860311/ChatGPT_Image_27_wrz_2026_21_58_10.png?ex=6abac6de&is=6ab9755e&hm=7d99948d62bb876ccf75edf4252efca6dba3485c53f512d4e0e95ce2a050b96a&=&format=webp&quality=lossless&width=1280&height=972" type="video/mp4">
-            </video>
+            <img class="film" src="https://media.discordapp.net/attachments/1553798187205267456/1553872991249764462/bdgvape.png?ex=6abad47e&is=6ab982fe&hm=1bf77c47cb63586efe9b29e517c0bcfba3509fb55b8ac6166664db4d2693dfc7&=&format=webp&quality=lossless&width=512&height=389" alt="BDGVAPE">
         </div>
         
         <p class="opis">Twój nowy sklep z jednorazówkami / liquidami w Bydgoszczy.</p>
@@ -271,7 +268,6 @@
 
     <div class="footer">bdgvape.xyz — Bydgoszcz</div>
 
-    <!-- MODAL KONTAKT -->
     <div class="modal-tlo" id="modalKontakt">
         <div class="modal">
             <button class="zamknij" onclick="zamknijKontakt()">×</button>
