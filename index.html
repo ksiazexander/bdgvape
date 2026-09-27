@@ -106,6 +106,43 @@
         .transfer-notka { margin-top: 20px; padding-top: 18px; border-top: 1px solid #1f1f1f; color: #999; font-size: 0.78rem; line-height: 1.6; text-align: left; font-weight: 300; }
         .transfer-notka b { color: #fff; font-weight: 600; }
 
+        /* Nowa sekcja – CTA */
+        .cta-zakup {
+            margin-top: 22px;
+            padding-top: 20px;
+            border-top: 1px solid #1f1f1f;
+            text-align: center;
+        }
+        .cta-zakup .cta-tytul {
+            color: #fff;
+            font-size: 0.95rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 8px;
+        }
+        .cta-zakup .cta-opis {
+            color: #bbb;
+            font-size: 0.8rem;
+            line-height: 1.6;
+            margin-bottom: 14px;
+            font-weight: 300;
+        }
+        .cta-zakup .cta-instagram {
+            display: inline-block;
+            background: #fff;
+            color: #000;
+            padding: 11px 24px;
+            border-radius: 4px;
+            font-weight: 800;
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .cta-zakup .cta-instagram:hover { background: #ccc; }
+
         .widok { display: none; }
         .widok.aktywny { display: block; }
 
@@ -120,27 +157,15 @@
         .modal-gdzie .notka .szkola { color: #ccc; font-size: 0.9rem; }
 
         @media (max-width: 800px) {
-            /* Kafelki – dopasowanie zdjęcia */
             .katalog { gap: 16px; }
-            .kafelek .zdjecie { 
-                height: 180px; 
-                object-fit: contain; 
-                background: #111;
-                padding: 10px;
-            }
+            .kafelek .zdjecie { height: 180px; object-fit: contain; background: #111; padding: 10px; }
             .kafelek .tresc { padding: 12px; }
             .kafelek h3 { font-size: 0.9rem; margin-bottom: 6px; }
             .kafelek .cena { font-size: 1.1rem; margin-bottom: 4px; }
             .kafelek .ilosc { font-size: 0.75rem; margin-bottom: 10px; }
             .kafelek .btn-kup { padding: 10px 16px; font-size: 0.75rem; }
 
-            /* Modal produktu */
-            .modal-produkt { 
-                grid-template-columns: 1fr; 
-                padding: 18px; 
-                padding-top: 55px; 
-                gap: 12px; 
-            }
+            .modal-produkt { grid-template-columns: 1fr; padding: 18px; padding-top: 55px; gap: 12px; }
             .modal-produkt .lewa img { max-height: 200px; object-fit: contain; background: #111; }
             .modal-produkt h2 { font-size: 1.2rem; margin-bottom: 8px; }
             .modal-produkt .kategoria { font-size: 0.6rem; margin-bottom: 5px; }
@@ -157,6 +182,11 @@
             .opis-tresc { font-size: 0.75rem; line-height: 1.4; }
             .transfer-notka { font-size: 0.7rem; line-height: 1.4; margin-top: 12px; padding-top: 10px; }
             .btn-kup-osiedla { padding: 11px 18px; font-size: 0.75rem; margin-top: 14px; letter-spacing: 2px; }
+
+            .cta-zakup { margin-top: 14px; padding-top: 12px; }
+            .cta-zakup .cta-tytul { font-size: 0.85rem; letter-spacing: 2px; margin-bottom: 6px; }
+            .cta-zakup .cta-opis { font-size: 0.75rem; line-height: 1.4; margin-bottom: 10px; }
+            .cta-zakup .cta-instagram { padding: 9px 18px; font-size: 0.75rem; letter-spacing: 2px; }
             
             .hero { padding: 40px 20px 40px 20px; }
             .hero h1 { font-size: 3rem; letter-spacing: 4px; }
@@ -240,8 +270,16 @@
                     <div class="cena-mala" id="mpCenaMala"></div>
                     <div class="opis-label">Osiedla</div>
                     <div id="mpOsiedla"></div>
+                    
                     <div class="transfer-notka">
                         <b>Transfer?</b> Twój najbliższy sprzedawca nie ma jakiegoś smaku, a nie chce Ci się iść na inne osiedle? Zapytaj o transfer (przekazanie produktu z jednego osiedla na drugie).
+                    </div>
+
+                    <!-- CTA – GOTOWY/A NA ZAKUP -->
+                    <div class="cta-zakup">
+                        <div class="cta-tytul">GOTOWY/A NA ZAKUP?</div>
+                        <div class="cta-opis">Jeśli wybrałeś już smak i miejsce kupna — umów się na zakup. Napisz prywatną wiadomość na Instagramie.</div>
+                        <a href="https://instagram.com/larpjaras" target="_blank" rel="noopener" class="cta-instagram">IG: LARPJARAS</a>
                     </div>
                 </div>
             </div>
@@ -409,49 +447,4 @@
             document.getElementById('btnWroc').style.display = 'none';
         }
 
-        function zamknijProdukt() { document.getElementById('modalProdukt').classList.remove('aktywny'); }
-        document.getElementById('modalProdukt').addEventListener('click', function(e) { if (e.target === this) zamknijProdukt(); });
-
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') { zamknijKontakt(); zamknijProdukt(); zamknijGdzie(); }
-        });
-
-        async function pobierzProdukty() {
-            try {
-                const response = await fetch('https://bdgvape-api.cosinusekk.workers.dev');
-                if (!response.ok) throw new Error('Błąd pobierania');
-                const produkty = await response.json();
-                produktyGlobal = produkty;
-                const katalog = document.getElementById('katalog');
-                katalog.innerHTML = '';
-                if (produkty.length === 0) {
-                    katalog.innerHTML = '<p style="color:#666;">Brak produktów.</p>';
-                    return;
-                }
-                produkty.forEach((produkt, index) => {
-                    const dane = parsujProdukt(produkt.opis);
-                    const iloscGlobalna = dane.smakiGlobalne.reduce((a, b) => a + b.ilosc, 0);
-
-                    katalog.innerHTML += `
-                        <div class="kafelek">
-                            ${produkt.zdjecie ? `<img src="${produkt.zdjecie}" alt="${produkt.nazwa}" class="zdjecie">` : '<div class="zdjecie"></div>'}
-                            <div class="tresc">
-                                <h3>${produkt.nazwa}</h3>
-                                <div class="cena">${formatujCene(dane.cena)}</div>
-                                <div class="ilosc">Dostępne: ${iloscGlobalna} szt.</div>
-                                <button class="btn-kup" onclick="otworzProdukt(${index})">Smaki</button>
-                            </div>
-                        </div>
-                    `;
-                });
-            } catch (error) {
-                document.getElementById('katalog').innerHTML = '<p style="color:#666;">Błąd ładowania produktów.</p>';
-                console.error(error);
-            }
-        }
-
-        pobierzProdukty();
-    </script>
-
-</body>
-</html>
+        function zamkn
