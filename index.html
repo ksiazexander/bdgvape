@@ -24,26 +24,10 @@
             justify-content: center;
             gap: 25px;
             margin-bottom: 20px;
-            flex-wrap: nowrap;
+            flex-wrap: wrap;
         }
-        .hero h1 { 
-            font-size: 5rem; 
-            font-weight: 900; 
-            letter-spacing: 6px; 
-            color: #fff; 
-            line-height: 1; 
-            text-transform: uppercase; 
-            text-shadow: 0 0 40px rgba(255,255,255,0.15), 0 0 80px rgba(255,255,255,0.05);
-            white-space: nowrap;
-        }
-        .hero .film {
-            height: 120px;
-            width: auto;
-            border-radius: 10px;
-            flex-shrink: 0;
-            object-fit: cover;
-            display: block;
-        }
+        .hero h1 { font-size: 6.5rem; font-weight: 900; letter-spacing: 8px; color: #fff; line-height: 1; text-transform: uppercase; text-shadow: 0 0 40px rgba(255,255,255,0.15), 0 0 80px rgba(255,255,255,0.05); }
+        .hero .gif-duck { height: 140px; width: auto; border-radius: 10px; }
         
         .hero .opis { font-size: 1.1rem; color: #bbb; max-width: 650px; margin: 0 auto 6px auto; line-height: 1.6; font-weight: 300; }
         .hero .dol { color: #666; font-size: 0.9rem; letter-spacing: 1px; max-width: 650px; margin: 0 auto 25px auto; line-height: 1.6; font-weight: 300; }
@@ -261,9 +245,9 @@
             .owner-info { font-size: 0.72rem; margin-top: 10px; padding-top: 10px; }
             
             .hero { padding: 40px 20px 40px 20px; }
-            .hero .tytul-z-gifem { gap: 10px; flex-wrap: nowrap; }
-            .hero h1 { font-size: 1.8rem; letter-spacing: 2px; }
-            .hero .film { height: 55px; }
+            .hero .tytul-z-gifem { gap: 12px; }
+            .hero h1 { font-size: 2.6rem; letter-spacing: 3px; }
+            .hero .gif-duck { height: 80px; }
             .hero .top-info { letter-spacing: 3px; font-size: 0.7rem; }
             .sekcja { padding: 40px 20px 60px 20px; }
             .sekcja h2 { font-size: 1.5rem; letter-spacing: 2px; }
@@ -293,9 +277,7 @@
         
         <div class="tytul-z-gifem">
             <h1>BDGVAPE</h1>
-            <video class="film" autoplay loop muted playsinline>
-                <source src="https://cdn.discordapp.com/attachments/1553798187205267456/1553863459618164856/bc53bdc7-beae-42fc-9d2e-adadfc861078.mp4?ex=6abacb9e&is=6ab97a1e&hm=bc6b4967a7a794a3c5eb3fe132e39a0e3f0499438657cc9c85f358d0176650c7&" type="video/mp4">
-            </video>
+            <img class="gif-duck" src="https://media.discordapp.net/attachments/1553798187205267456/1553858362368860311/ChatGPT_Image_27_wrz_2026_21_58_10.png?ex=6abac6de&is=6ab9755e&hm=7d99948d62bb876ccf75edf4252efca6dba3485c53f512d4e0e95ce2a050b96a&=&format=webp&quality=lossless&width=1280&height=972" alt="BDGVAPE grafika">
         </div>
         
         <p class="opis">Twój nowy sklep z jednorazówkami / liquidami w Bydgoszczy.</p>
