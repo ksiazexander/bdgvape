@@ -447,4 +447,49 @@
             document.getElementById('btnWroc').style.display = 'none';
         }
 
-        function zamkn
+        function zamknijProdukt() { document.getElementById('modalProdukt').classList.remove('aktywny'); }
+        document.getElementById('modalProdukt').addEventListener('click', function(e) { if (e.target === this) zamknijProdukt(); });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') { zamknijKontakt(); zamknijProdukt(); zamknijGdzie(); }
+        });
+
+        async function pobierzProdukty() {
+            try {
+                const response = await fetch('https://bdgvape-api.cosinusekk.workers.dev');
+                if (!response.ok) throw new Error('Błąd pobierania');
+                const produkty = await response.json();
+                produktyGlobal = produkty;
+                const katalog = document.getElementById('katalog');
+                katalog.innerHTML = '';
+                if (produkty.length === 0) {
+                    katalog.innerHTML = '<p style="color:#666;">Brak produktów.</p>';
+                    return;
+                }
+                produkty.forEach((produkt, index) => {
+                    const dane = parsujProdukt(produkt.opis);
+                    const iloscGlobalna = dane.smakiGlobalne.reduce((a, b) => a + b.ilosc, 0);
+
+                    katalog.innerHTML += `
+                        <div class="kafelek">
+                            ${produkt.zdjecie ? `<img src="${produkt.zdjecie}" alt="${produkt.nazwa}" class="zdjecie">` : '<div class="zdjecie"></div>'}
+                            <div class="tresc">
+                                <h3>${produkt.nazwa}</h3>
+                                <div class="cena">${formatujCene(dane.cena)}</div>
+                                <div class="ilosc">Dostępne: ${iloscGlobalna} szt.</div>
+                                <button class="btn-kup" onclick="otworzProdukt(${index})">Smaki</button>
+                            </div>
+                        </div>
+                    `;
+                });
+            } catch (error) {
+                document.getElementById('katalog').innerHTML = '<p style="color:#666;">Błąd ładowania produktów.</p>';
+                console.error(error);
+            }
+        }
+
+        pobierzProdukty();
+    </script>
+
+</body>
+</html>
