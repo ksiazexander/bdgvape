@@ -180,7 +180,6 @@
         </div>
     </div>
 
-    <!-- MODAL GDZIE SPRZEDAJEMY -->
     <div class="modal-tlo" id="modalGdzie">
         <div class="modal-gdzie">
             <button class="zamknij" onclick="zamknijGdzie()">×</button>
@@ -211,13 +210,39 @@
             return (tekst || '').replace(/\*\*/g, '');
         }
 
-        // Formatuje cenę: jeśli nie ma "zł", dodaje " zł"
         function formatujCene(cena) {
             if (!cena || cena === '—') return '—';
             const c = String(cena).trim();
-            // Jeśli już zawiera "zł" (gdziekolwiek), zostaw
             if (/zł/i.test(c)) return c;
             return c + ' zł';
+        }
+
+        // Wyciąga ilość z opisu (obsługuje "Ilość łącznie: X szt." oraz sumę smaków)
+        function wyciagnijIlosc(opis) {
+            const linie = (opis || '').split('\n');
+
+            // 1. Najpierw szukamy "Ilość łącznie" lub "Ilość"
+            for (const l of linie) {
+                const lower = l.toLowerCase();
+                if (lower.startsWith('ilość łącznie:') || lower.startsWith('ilosc lacznie:') || lower.startsWith('ilość:') || lower.startsWith('ilosc:')) {
+                    const wartosc = usunGwiazdki(l.replace(/[^:]+:/, '')).replace('szt.', '').trim();
+                    if (wartosc) return wartosc;
+                }
+            }
+
+            // 2. Jeśli nie ma – sumujemy smaki (linie zaczynające się od "•")
+            let suma = 0;
+            let znaleziono = false;
+            for (const l of linie) {
+                const match = l.match(/•.*—\s*(\d+)\s*szt\./);
+                if (match) {
+                    suma += parseInt(match[1]) || 0;
+                    znaleziono = true;
+                }
+            }
+            if (znaleziono) return String(suma);
+
+            return '—';
         }
 
         // ===== KONTAKT =====
@@ -269,19 +294,20 @@
                     return;
                 }
                 produkty.forEach((produkt, index) => {
-                    let cena = '—', ilosc = '—';
+                    let cena = '—';
                     const linie = (produkt.opis || '').split('\n');
                     for (const l of linie) {
                         if (l.toLowerCase().startsWith('cena:')) cena = usunGwiazdki(l.replace(/cena:/i, '')).trim();
-                        if (l.toLowerCase().startsWith('ilość:') || l.toLowerCase().startsWith('ilosc:')) ilosc = usunGwiazdki(l.replace(/ilość:|ilosc:/i, '')).trim();
                     }
+                    const ilosc = wyciagnijIlosc(produkt.opis);
+
                     katalog.innerHTML += `
                         <div class="kafelek">
                             ${produkt.zdjecie ? `<img src="${produkt.zdjecie}" alt="${produkt.nazwa}" class="zdjecie">` : '<div class="zdjecie"></div>'}
                             <div class="tresc">
                                 <h3>${produkt.nazwa}</h3>
                                 <div class="cena">${formatujCene(cena)}</div>
-                                <div class="ilosc">Dostępne: ${ilosc}</div>
+                                <div class="ilosc">Dostępne: ${ilosc} szt.</div>
                                 <button class="btn-kup" onclick="otworzProdukt(${index})">Kup / Smaki</button>
                             </div>
                         </div>
