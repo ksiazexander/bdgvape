@@ -88,12 +88,12 @@
 
         .modal-produkt { background: #0a0a0a; border: 1px solid #333; border-radius: 12px; max-width: 900px; width: 100%; padding: 40px; position: relative; box-shadow: 0 20px 80px rgba(0,0,0,0.9); display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
         .modal-produkt .lewa img { width: 100%; border-radius: 8px; background: #141414; object-fit: cover; max-height: 400px; }
-        .modal-produkt .prawa { display: flex; flex-direction: column; justify-content: center; }
+        .modal-produkt .prawa { display: flex; flex-direction: column; justify-content: center; min-width: 0; }
         .modal-produkt .kategoria { color: #666; font-size: 0.7rem; letter-spacing: 5px; text-transform: uppercase; margin-bottom: 10px; }
-        .modal-produkt h2 { font-size: 2rem; font-weight: 800; color: #fff; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 15px; line-height: 1.1; }
+        .modal-produkt h2 { font-size: 2rem; font-weight: 800; color: #fff; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 15px; line-height: 1.1; word-break: break-word; }
         .modal-produkt .cena-duza { color: #fff; font-size: 1.8rem; font-weight: 800; margin-bottom: 25px; }
         .modal-produkt .opis-label { color: #666; font-size: 0.7rem; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 10px; }
-        .modal-produkt .opis-tresc { color: #bbb; font-size: 0.95rem; line-height: 1.7; white-space: pre-line; font-weight: 300; }
+        .modal-produkt .opis-tresc { color: #bbb; font-size: 0.82rem; line-height: 1.5; white-space: pre-line; font-weight: 300; word-wrap: break-word; overflow-wrap: break-word; word-break: break-word; }
 
         .modal-gdzie { background: #0a0a0a; border: 1px solid #333; border-radius: 12px; padding: 45px; max-width: 600px; width: 100%; position: relative; box-shadow: 0 20px 80px rgba(0,0,0,0.9); }
         .modal-gdzie h3 { color: #fff; font-size: 1.4rem; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 4px; font-weight: 800; text-align: center; }
@@ -160,7 +160,7 @@
         <div class="modal">
             <button class="zamknij" onclick="zamknijKontakt()">×</button>
             <h3>Kontakt</h3>
-            <p>ig: soon</p>
+            <p>ig: ggffg</p>
         </div>
     </div>
 
@@ -217,11 +217,9 @@
             return c + ' zł';
         }
 
-        // Wyciąga ilość z opisu (obsługuje "Ilość łącznie: X szt." oraz sumę smaków)
         function wyciagnijIlosc(opis) {
             const linie = (opis || '').split('\n');
 
-            // 1. Najpierw szukamy "Ilość łącznie" lub "Ilość"
             for (const l of linie) {
                 const lower = l.toLowerCase();
                 if (lower.startsWith('ilość łącznie:') || lower.startsWith('ilosc lacznie:') || lower.startsWith('ilość:') || lower.startsWith('ilosc:')) {
@@ -230,7 +228,6 @@
                 }
             }
 
-            // 2. Jeśli nie ma – sumujemy smaki (linie zaczynające się od "•")
             let suma = 0;
             let znaleziono = false;
             for (const l of linie) {
