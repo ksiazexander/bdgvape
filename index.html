@@ -106,7 +106,6 @@
         .transfer-notka { margin-top: 20px; padding-top: 18px; border-top: 1px solid #1f1f1f; color: #999; font-size: 0.78rem; line-height: 1.6; text-align: left; font-weight: 300; }
         .transfer-notka b { color: #fff; font-weight: 600; }
 
-        /* Nowa sekcja – CTA */
         .cta-zakup {
             margin-top: 22px;
             padding-top: 20px;
@@ -275,11 +274,10 @@
                         <b>Transfer?</b> Twój najbliższy sprzedawca nie ma jakiegoś smaku, a nie chce Ci się iść na inne osiedle? Zapytaj o transfer (przekazanie produktu z jednego osiedla na drugie).
                     </div>
 
-                    <!-- CTA – GOTOWY/A NA ZAKUP -->
                     <div class="cta-zakup">
                         <div class="cta-tytul">GOTOWY/A NA ZAKUP?</div>
                         <div class="cta-opis">Jeśli wybrałeś już smak i miejsce kupna — umów się na zakup. Napisz prywatną wiadomość na Instagramie.</div>
-                        <a href="https://instagram.com/larpjaras" target="_blank" rel="noopener" class="cta-instagram">IG: LARPJARAS</a>
+                        <a id="mpInstagram" href="#" target="_blank" rel="noopener" class="cta-instagram">IG: LARPJARAS</a>
                     </div>
                 </div>
             </div>
@@ -298,6 +296,10 @@
             </div>
             <div class="sprzedawca">
                 <span class="region">Szwederowo i okolice</span>
+                <span class="lokalizacja">🏫 2LO</span>
+            </div>
+            <div class="sprzedawca">
+                <span class="region">Zielonka i okolice</span>
                 <span class="lokalizacja">🏫 2LO</span>
             </div>
 
@@ -324,7 +326,7 @@
         function parsujProdukt(opis) {
             const tekst = usunGwiazdki(opis || '');
             const linie = tekst.split('\n');
-            const wynik = { cena: '', smakiGlobalne: [], osiedla: [], opis: '' };
+            const wynik = { cena: '', smakiGlobalne: [], osiedla: [], opis: '', instagram: 'larpjaras' };
 
             let tryb = 'glowny';
             let aktualneOsiedle = null;
@@ -337,6 +339,9 @@
                     wynik.cena = l.replace(/cena:/i, '').trim();
                 } else if (lower.startsWith('ilość łącznie:') || lower.startsWith('ilosc lacznie:')) {
                     // pomijamy
+                } else if (lower.startsWith('instagram:')) {
+                    const ig = l.replace(/instagram:/i, '').trim().replace(/^@/, '');
+                    if (ig) wynik.instagram = ig;
                 } else if (lower === 'smaki:') {
                     tryb = 'smaki';
                     aktualneOsiedle = null;
@@ -383,6 +388,11 @@
             document.getElementById('mpNazwa').textContent = p.nazwa;
             document.getElementById('mpCena').textContent = formatujCene(dane.cena);
             document.getElementById('mpCenaMala').textContent = formatujCene(dane.cena);
+
+            // Instagram – ustaw link i tekst
+            const igLink = document.getElementById('mpInstagram');
+            igLink.href = 'https://instagram.com/' + dane.instagram;
+            igLink.textContent = 'IG: ' + dane.instagram.toUpperCase();
 
             const kontenerSmaki = document.getElementById('mpSmakiGlobalne');
             if (dane.smakiGlobalne.length === 0) {
