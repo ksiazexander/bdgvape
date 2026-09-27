@@ -93,9 +93,6 @@
         .smak-linia-mala .smak-ilosc { color: #fff; font-weight: 600; }
         .osiedle-brak { color: #666; font-size: 0.85rem; font-style: italic; padding: 8px 0; }
 
-        .osiedle-ig { margin-top: 8px; padding-top: 8px; border-top: 1px solid #1f1f1f; color: #ccc; font-size: 0.8rem; }
-        .osiedle-ig a { color: #fff; font-weight: 700; text-decoration: underline; }
-
         .opis-tresc { color: #bbb; font-size: 0.85rem; line-height: 1.6; font-weight: 300; word-wrap: break-word; overflow-wrap: break-word; word-break: break-word; }
 
         .btn-kup-osiedla {
@@ -127,11 +124,49 @@
             color: #bbb;
             font-size: 0.8rem;
             line-height: 1.6;
-            margin-bottom: 14px;
+            margin-bottom: 8px;
             font-weight: 300;
         }
 
-        /* Sekcja owner */
+        /* Kontakty per osiedle */
+        #mpKontakty {
+            margin-top: 16px;
+            padding-top: 14px;
+            border-top: 1px solid #1f1f1f;
+            text-align: center;
+        }
+        #mpKontakty .kontakt-tytul {
+            color: #fff;
+            font-size: 0.78rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        #mpKontakty .kontakt-item {
+            background: #111;
+            border: 1px solid #1f1f1f;
+            border-radius: 8px;
+            padding: 10px 14px;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            color: #bbb;
+        }
+        #mpKontakty .kontakt-osiedle {
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 4px;
+        }
+        #mpKontakty .kontakt-ig {
+            color: #fff;
+            font-weight: 700;
+            text-decoration: underline;
+        }
+        #mpKontakty .kontakt-ig:hover { color: #ccc; }
+
         .owner-info {
             margin-top: 16px;
             padding-top: 14px;
@@ -184,14 +219,19 @@
             .osiedle-nazwa { font-size: 0.8rem; }
             .osiedle-ilosc { font-size: 0.7rem; }
             .smak-linia-mala { padding: 2px 0; font-size: 0.72rem; }
-            .osiedle-ig { font-size: 0.72rem; margin-top: 6px; padding-top: 6px; }
             .opis-tresc { font-size: 0.75rem; line-height: 1.4; }
             .transfer-notka { font-size: 0.7rem; line-height: 1.4; margin-top: 12px; padding-top: 10px; }
             .btn-kup-osiedla { padding: 11px 18px; font-size: 0.75rem; margin-top: 14px; letter-spacing: 2px; }
 
             .cta-zakup { margin-top: 14px; padding-top: 12px; }
             .cta-zakup .cta-tytul { font-size: 0.85rem; letter-spacing: 2px; margin-bottom: 6px; }
-            .cta-zakup .cta-opis { font-size: 0.75rem; line-height: 1.4; margin-bottom: 10px; }
+            .cta-zakup .cta-opis { font-size: 0.75rem; line-height: 1.4; margin-bottom: 8px; }
+
+            #mpKontakty { margin-top: 12px; padding-top: 10px; }
+            #mpKontakty .kontakt-tytul { font-size: 0.7rem; letter-spacing: 2px; margin-bottom: 8px; }
+            #mpKontakty .kontakt-item { padding: 8px 10px; font-size: 0.78rem; margin-bottom: 6px; }
+            #mpKontakty .kontakt-osiedle { font-size: 0.72rem; }
+
             .owner-info { font-size: 0.72rem; margin-top: 10px; padding-top: 10px; }
             
             .hero { padding: 40px 20px 40px 20px; }
@@ -283,8 +323,11 @@
 
                     <div class="cta-zakup">
                         <div class="cta-tytul">GOTOWY/A NA ZAKUP?</div>
-                        <div class="cta-opis">Jeśli wybrałeś już smak i miejsce kupna — napisz prywatną wiadomość na Instagramie do sprzedawcy z Twojego osiedla (kontakt podany wyżej).</div>
+                        <div class="cta-opis">Jeśli wybrałeś już smak i miejsce kupna — napisz prywatną wiadomość na Instagramie do sprzedawcy z Twojego osiedla.</div>
                     </div>
+
+                    <!-- DYNAMICZNE KONTAKTY Z BOTA -->
+                    <div id="mpKontakty"></div>
 
                     <div class="owner-info">
                         Pamiętaj, jeśli masz problem ze skontaktowaniem się ze sprzedawcą, możesz napisać do ownera:<br>
@@ -436,10 +479,6 @@
                     } else {
                         smakiHtml = '<div class="osiedle-brak">brak smaków</div>';
                     }
-
-                    const ig = dane.kontakty[os.nazwa] || '';
-                    const igHtml = ig ? `<div class="osiedle-ig">📷 Instagram: <a href="https://instagram.com/${ig}" target="_blank">@${ig}</a></div>` : '';
-
                     kontenerOs.innerHTML += `
                         <div class="osiedle-blok">
                             <div class="osiedle-naglowek">
@@ -447,10 +486,28 @@
                                 <span class="osiedle-ilosc">${os.ilosc} szt.</span>
                             </div>
                             ${smakiHtml}
-                            ${igHtml}
                         </div>
                     `;
                 }
+            }
+
+            // ===== KONTAKTY =====
+            const kontenerKontakty = document.getElementById('mpKontakty');
+            const klucze = Object.keys(dane.kontakty || {});
+            if (klucze.length === 0) {
+                kontenerKontakty.innerHTML = '';
+            } else {
+                let html = '<div class="kontakt-tytul">Kontakt do sprzedawców</div>';
+                for (const os of klucze) {
+                    const ig = dane.kontakty[os];
+                    html += `
+                        <div class="kontakt-item">
+                            <span class="kontakt-osiedle">🏠 ${os}</span>
+                            📷 <a href="https://instagram.com/${ig}" target="_blank" class="kontakt-ig">@${ig}</a>
+                        </div>
+                    `;
+                }
+                kontenerKontakty.innerHTML = html;
             }
 
             document.getElementById('widokSmaki').classList.add('aktywny');
