@@ -3,24 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sklep Vape Bydgoszcz</title>
+    <title>bdgvape.xyz</title>
     <style>
-        body { background: #000; color: #fff; font-family: sans-serif; margin: 0; padding: 20px; }
-        h1 { text-align: center; color: #00ffcc; margin-bottom: 30px; text-transform: uppercase; }
-        .katalog { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; }
-        .kafelek { background: #111; border-radius: 12px; padding: 15px; text-align: center; box-shadow: 0 4px 10px rgba(0, 255, 204, 0.1); transition: transform 0.2s; }
-        .kafelek:hover { transform: scale(1.02); }
-        .kafelek img { width: 100%; height: 200px; object-fit: cover; border-radius: 8px; }
-        .kafelek h2 { margin: 10px 0 5px; font-size: 1.3rem; color: #00ffcc; }
-        .kafelek p { margin: 5px 0; color: #ccc; font-size: 0.95rem; }
-        .footer { text-align: center; margin-top: 40px; color: #555; font-size: 0.8rem; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: #000;
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            padding: 0;
+        }
+
+        /* Górny pasek z logo */
+        .topbar {
+            padding: 20px 40px;
+            display: flex;
+            align-items: center;
+        }
+
+        .topbar .logo {
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            opacity: 0.85;
+        }
+
+        /* Panel główny */
+        .hero {
+            padding: 60px 40px 80px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 5rem;
+            font-weight: 900;
+            letter-spacing: 4px;
+            color: #fff;
+            line-height: 1;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: #ccc;
+            line-height: 1.6;
+            max-width: 700px;
+        }
+
+        .hero p.sub {
+            margin-top: 10px;
+            color: #888;
+            font-size: 1rem;
+        }
+
+        /* Sekcja produktów */
+        .sekcja-produkty {
+            padding: 40px 40px 80px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            border-top: 1px solid #222;
+        }
+
+        .sekcja-produkty h2 {
+            font-size: 1.5rem;
+            color: #fff;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+
+        .katalog {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .kafelek {
+            background: #0a0a0a;
+            border: 1px solid #1f1f1f;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .kafelek:hover {
+            transform: translateY(-4px);
+            border-color: #444;
+        }
+
+        .kafelek img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .kafelek h3 {
+            margin: 8px 0;
+            font-size: 1.2rem;
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .kafelek p {
+            margin: 4px 0;
+            color: #aaa;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #444;
+            font-size: 0.85rem;
+            border-top: 1px solid #1a1a1a;
+        }
+
+        @media (max-width: 700px) {
+            .hero h1 { font-size: 2.5rem; letter-spacing: 2px; }
+            .hero { padding: 40px 20px 60px 20px; }
+            .sekcja-produkty { padding: 30px 20px 60px 20px; }
+            .topbar { padding: 15px 20px; }
+        }
     </style>
 </head>
 <body>
-    <h1>Nasze Produkty</h1>
-    <div class="katalog" id="katalog">
-        <p style="text-align:center;">Ładowanie produktów...</p>
+
+    <div class="topbar">
+        <div class="logo">bdgvape.xyz</div>
     </div>
+
+    <div class="hero">
+        <h1>BDGVAPE</h1>
+        <p>Twój nowy sklep z jednorazówkami / liquidami w Bydgoszczy.</p>
+        <p class="sub">Zjedź niżej, aby zapoznać się z naszą ofertą i formami kupna.</p>
+    </div>
+
+    <div class="sekcja-produkty">
+        <h2>Nasze produkty</h2>
+        <div class="katalog" id="katalog">
+            <p style="color:#666;">Ładowanie produktów...</p>
+        </div>
+    </div>
+
     <div class="footer">bdgvape.xyz</div>
 
     <script>
@@ -34,7 +167,7 @@
                 katalog.innerHTML = '';
 
                 if (produkty.length === 0) {
-                    katalog.innerHTML = '<p style="text-align:center;">Brak produktów.</p>';
+                    katalog.innerHTML = '<p style="color:#666;">Brak produktów.</p>';
                     return;
                 }
 
@@ -42,18 +175,19 @@
                     katalog.innerHTML += `
                         <div class="kafelek">
                             ${produkt.zdjecie ? `<img src="${produkt.zdjecie}" alt="${produkt.nazwa}">` : ''}
-                            <h2>${produkt.nazwa}</h2>
+                            <h3>${produkt.nazwa}</h3>
                             <p>${produkt.opis.replace(/\n/g, '<br>')}</p>
                         </div>
                     `;
                 }
             } catch (error) {
-                document.getElementById('katalog').innerHTML = '<p style="text-align:center;">Błąd ładowania produktów.</p>';
+                document.getElementById('katalog').innerHTML = '<p style="color:#666;">Błąd ładowania produktów.</p>';
                 console.error(error);
             }
         }
 
         pobierzProdukty();
     </script>
+
 </body>
 </html>
