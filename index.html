@@ -17,7 +17,19 @@
 
         .hero { padding: 80px 40px 60px 40px; text-align: center; border-bottom: 1px solid #1a1a1a; }
         .hero .top-info { color: #555; font-size: 0.75rem; letter-spacing: 5px; text-transform: uppercase; margin-bottom: 20px; }
-        .hero h1 { font-size: 6.5rem; font-weight: 900; letter-spacing: 8px; color: #fff; line-height: 1; margin-bottom: 20px; text-transform: uppercase; text-shadow: 0 0 40px rgba(255,255,255,0.15), 0 0 80px rgba(255,255,255,0.05); }
+        
+        /* NOWA SEKCJA: H1 + GIF obok siebie */
+        .hero .tytul-z-gifem {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .hero h1 { font-size: 6.5rem; font-weight: 900; letter-spacing: 8px; color: #fff; line-height: 1; text-transform: uppercase; text-shadow: 0 0 40px rgba(255,255,255,0.15), 0 0 80px rgba(255,255,255,0.05); }
+        .hero .gif-duck { height: 130px; width: auto; border-radius: 8px; }
+        
         .hero .opis { font-size: 1.1rem; color: #bbb; max-width: 650px; margin: 0 auto 6px auto; line-height: 1.6; font-weight: 300; }
         .hero .dol { color: #666; font-size: 0.9rem; letter-spacing: 1px; max-width: 650px; margin: 0 auto 25px auto; line-height: 1.6; font-weight: 300; }
 
@@ -128,7 +140,6 @@
             font-weight: 300;
         }
 
-        /* Kontakty per osiedle */
         #mpKontakty {
             margin-top: 16px;
             padding-top: 14px;
@@ -235,7 +246,9 @@
             .owner-info { font-size: 0.72rem; margin-top: 10px; padding-top: 10px; }
             
             .hero { padding: 40px 20px 40px 20px; }
-            .hero h1 { font-size: 3rem; letter-spacing: 4px; }
+            .hero .tytul-z-gifem { gap: 12px; }
+            .hero h1 { font-size: 2.6rem; letter-spacing: 3px; }
+            .hero .gif-duck { height: 70px; }
             .hero .top-info { letter-spacing: 3px; font-size: 0.7rem; }
             .sekcja { padding: 40px 20px 60px 20px; }
             .sekcja h2 { font-size: 1.5rem; letter-spacing: 2px; }
@@ -262,7 +275,13 @@
 
     <div class="hero">
         <div class="top-info">Odbiór w Bydgoszczy i okolicach · Tylko 18+</div>
-        <h1>BDGVAPE</h1>
+        
+        <!-- TYTUŁ + GIF OBOK SIEBIE -->
+        <div class="tytul-z-gifem">
+            <h1>BDGVAPE</h1>
+            <img class="gif-duck" src="https://media.discordapp.net/attachments/1553798187205267456/1553856691622117477/telegram-duck-smoking.gif?ex=6abac550&is=6ab973d0&hm=45b9eb1b4612cf451db45c8e74fa84ef928824cc1efc96fead277e75de4ccf74&=" alt="duck">
+        </div>
+        
         <p class="opis">Twój nowy sklep z jednorazówkami / liquidami w Bydgoszczy.</p>
         <p class="dol">Zjedź niżej, aby zapoznać się z naszą ofertą i formami kupna. Odbieraj swoje produkty od różnych sprzedawców w zależności od Twojego położenia.</p>
         <button class="btn-gdzie" onclick="pokazGdzie()">🏠 · Gdzie sprzedajemy? (kliknij)</button>
@@ -326,7 +345,6 @@
                         <div class="cta-opis">Jeśli wybrałeś już smak i miejsce kupna — napisz prywatną wiadomość na Instagramie do sprzedawcy z Twojego osiedla.</div>
                     </div>
 
-                    <!-- DYNAMICZNE KONTAKTY Z BOTA -->
                     <div id="mpKontakty"></div>
 
                     <div class="owner-info">
@@ -417,7 +435,6 @@
                         if (mSm) aktualneOsiedle.smaki.push({ nazwa: mSm[1].trim(), ilosc: parseInt(mSm[2]) || 0 });
                     }
                 } else if (tryb === 'kontakty') {
-                    // Format: OSG: ig:larpjaras
                     const m = l.match(/^(.+?):\s*(?:ig:)?\s*@?(.+)$/i);
                     if (m) wynik.kontakty[m[1].trim()] = m[2].trim();
                 } else if (tryb === 'opis') {
@@ -491,7 +508,6 @@
                 }
             }
 
-            // ===== KONTAKTY =====
             const kontenerKontakty = document.getElementById('mpKontakty');
             const klucze = Object.keys(dane.kontakty || {});
             if (klucze.length === 0) {
