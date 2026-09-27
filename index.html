@@ -36,7 +36,14 @@
             text-shadow: 0 0 40px rgba(255,255,255,0.15), 0 0 80px rgba(255,255,255,0.05);
             white-space: nowrap;
         }
-        .hero .gif-duck { height: 110px; width: auto; border-radius: 10px; flex-shrink: 0; }
+        .hero .film {
+            height: 120px;
+            width: auto;
+            border-radius: 10px;
+            flex-shrink: 0;
+            object-fit: cover;
+            display: block;
+        }
         
         .hero .opis { font-size: 1.1rem; color: #bbb; max-width: 650px; margin: 0 auto 6px auto; line-height: 1.6; font-weight: 300; }
         .hero .dol { color: #666; font-size: 0.9rem; letter-spacing: 1px; max-width: 650px; margin: 0 auto 25px auto; line-height: 1.6; font-weight: 300; }
@@ -72,6 +79,23 @@
         .modal { background: #0a0a0a; border: 1px solid #333; border-radius: 12px; padding: 45px; max-width: 450px; width: 100%; text-align: center; position: relative; box-shadow: 0 20px 80px rgba(0,0,0,0.9); }
         .modal h3 { color: #fff; font-size: 1.1rem; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 4px; font-weight: 700; }
         .modal p { color: #ccc; font-size: 1.1rem; font-weight: 500; letter-spacing: 1px; }
+
+        /* Nowy przycisk IG w modalu Kontakt */
+        .btn-ig {
+            display: inline-block;
+            background: #fff;
+            color: #000;
+            padding: 14px 28px;
+            border-radius: 4px;
+            font-weight: 800;
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.2s;
+            margin-top: 15px;
+        }
+        .btn-ig:hover { background: #ccc; }
 
         .zamknij {
             position: absolute; top: 10px; right: 10px; width: 44px; height: 44px;
@@ -148,60 +172,6 @@
             font-weight: 300;
         }
 
-        #mpKontakty {
-            margin-top: 16px;
-            padding-top: 14px;
-            border-top: 1px solid #1f1f1f;
-            text-align: center;
-        }
-        #mpKontakty .kontakt-tytul {
-            color: #fff;
-            font-size: 0.78rem;
-            font-weight: 800;
-            letter-spacing: 3px;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
-        #mpKontakty .kontakt-item {
-            background: #111;
-            border: 1px solid #1f1f1f;
-            border-radius: 8px;
-            padding: 10px 14px;
-            margin-bottom: 8px;
-            font-size: 0.85rem;
-            color: #bbb;
-        }
-        #mpKontakty .kontakt-osiedle {
-            color: #fff;
-            font-weight: 700;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-            display: block;
-            margin-bottom: 4px;
-        }
-        #mpKontakty .kontakt-ig {
-            color: #fff;
-            font-weight: 700;
-            text-decoration: underline;
-        }
-        #mpKontakty .kontakt-ig:hover { color: #ccc; }
-
-        .owner-info {
-            margin-top: 16px;
-            padding-top: 14px;
-            border-top: 1px solid #1f1f1f;
-            color: #888;
-            font-size: 0.78rem;
-            line-height: 1.6;
-            text-align: center;
-            font-weight: 300;
-        }
-        .owner-info a {
-            color: #fff;
-            font-weight: 700;
-            text-decoration: underline;
-        }
-
         .widok { display: none; }
         .widok.aktywny { display: block; }
 
@@ -246,17 +216,12 @@
             .cta-zakup .cta-tytul { font-size: 0.85rem; letter-spacing: 2px; margin-bottom: 6px; }
             .cta-zakup .cta-opis { font-size: 0.75rem; line-height: 1.4; margin-bottom: 8px; }
 
-            #mpKontakty { margin-top: 12px; padding-top: 10px; }
-            #mpKontakty .kontakt-tytul { font-size: 0.7rem; letter-spacing: 2px; margin-bottom: 8px; }
-            #mpKontakty .kontakt-item { padding: 8px 10px; font-size: 0.78rem; margin-bottom: 6px; }
-            #mpKontakty .kontakt-osiedle { font-size: 0.72rem; }
-
-            .owner-info { font-size: 0.72rem; margin-top: 10px; padding-top: 10px; }
+            .btn-ig { padding: 11px 22px; font-size: 0.75rem; letter-spacing: 2px; }
             
             .hero { padding: 40px 20px 40px 20px; }
             .hero .tytul-z-gifem { gap: 10px; flex-wrap: nowrap; }
             .hero h1 { font-size: 1.8rem; letter-spacing: 2px; }
-            .hero .gif-duck { height: 50px; }
+            .hero .film { height: 55px; }
             .hero .top-info { letter-spacing: 3px; font-size: 0.7rem; }
             .sekcja { padding: 40px 20px 60px 20px; }
             .sekcja h2 { font-size: 1.5rem; letter-spacing: 2px; }
@@ -286,7 +251,9 @@
         
         <div class="tytul-z-gifem">
             <h1>BDGVAPE</h1>
-            <img class="gif-duck" src="https://media.discordapp.net/attachments/1553798187205267456/1553858362368860311/ChatGPT_Image_27_wrz_2026_21_58_10.png?ex=6abac6de&is=6ab9755e&hm=7d99948d62bb876ccf75edf4252efca6dba3485c53f512d4e0e95ce2a050b96a&=&format=webp&quality=lossless&width=1280&height=972" alt="BDGVAPE grafika">
+            <video class="film" autoplay loop muted playsinline>
+                <source src="https://cdn.discordapp.com/attachments/1553798187205267456/1553863459618164856/bc53bdc7-beae-42fc-9d2e-adadfc861078.mp4?ex=6abacb9e&is=6ab97a1e&hm=bc6b4967a7a794a3c5eb3fe132e39a0e3f0499438657cc9c85f358d0176650c7&" type="video/mp4">
+            </video>
         </div>
         
         <p class="opis">Twój nowy sklep z jednorazówkami / liquidami w Bydgoszczy.</p>
@@ -304,11 +271,14 @@
 
     <div class="footer">bdgvape.xyz — Bydgoszcz</div>
 
+    <!-- MODAL KONTAKT -->
     <div class="modal-tlo" id="modalKontakt">
         <div class="modal">
             <button class="zamknij" onclick="zamknijKontakt()">×</button>
             <h3>Kontakt</h3>
-            <p>ig: ggffg</p>
+            <p style="margin-bottom: 8px;">Napisz do nas na Instagramie:</p>
+            <p style="color: #fff; font-weight: 700; margin-bottom: 15px;">@bdgvape</p>
+            <a class="btn-ig" href="https://www.instagram.com/bdgvape/" target="_blank" rel="noopener">Napisz do nas na IG</a>
         </div>
     </div>
 
@@ -349,14 +319,8 @@
 
                     <div class="cta-zakup">
                         <div class="cta-tytul">GOTOWY/A NA ZAKUP?</div>
-                        <div class="cta-opis">Jeśli wybrałeś już smak i miejsce kupna — napisz prywatną wiadomość na Instagramie do sprzedawcy z Twojego osiedla.</div>
-                    </div>
-
-                    <div id="mpKontakty"></div>
-
-                    <div class="owner-info">
-                        Pamiętaj, jeśli masz problem ze skontaktowaniem się ze sprzedawcą, możesz napisać do ownera:<br>
-                        IG: <a href="https://instagram.com/larpjaras" target="_blank">@larpjaras</a>
+                        <div class="cta-opis">Jeśli wybrałeś już smak i miejsce kupna — napisz prywatną wiadomość na Instagramie.<br><br>Napisz nam, kiedy i gdzie chcesz się spotkać, aby dokonać zakupu — dogadamy się.</div>
+                        <a class="btn-ig" href="https://www.instagram.com/bdgvape/" target="_blank" rel="noopener">Napisz do nas na IG</a>
                     </div>
                 </div>
             </div>
@@ -405,7 +369,7 @@
         function parsujProdukt(opis) {
             const tekst = usunGwiazdki(opis || '');
             const linie = tekst.split('\n');
-            const wynik = { cena: '', smakiGlobalne: [], osiedla: [], opis: '', kontakty: {} };
+            const wynik = { cena: '', smakiGlobalne: [], osiedla: [], opis: '' };
 
             let tryb = 'glowny';
             let aktualneOsiedle = null;
@@ -424,9 +388,6 @@
                 } else if (lower === 'osiedla:') {
                     tryb = 'osiedla';
                     aktualneOsiedle = null;
-                } else if (lower === 'kontakty:') {
-                    tryb = 'kontakty';
-                    aktualneOsiedle = null;
                 } else if (lower === 'opis:') {
                     tryb = 'opis';
                 } else if (tryb === 'smaki') {
@@ -441,9 +402,6 @@
                         const mSm = l.match(/•\s*(.+?)\s*—\s*(\d+)\s*szt\./);
                         if (mSm) aktualneOsiedle.smaki.push({ nazwa: mSm[1].trim(), ilosc: parseInt(mSm[2]) || 0 });
                     }
-                } else if (tryb === 'kontakty') {
-                    const m = l.match(/^(.+?):\s*(?:ig:)?\s*@?(.+)$/i);
-                    if (m) wynik.kontakty[m[1].trim()] = m[2].trim();
                 } else if (tryb === 'opis') {
                     if (l.trim() !== '') buforOpis.push(l);
                 }
@@ -513,24 +471,6 @@
                         </div>
                     `;
                 }
-            }
-
-            const kontenerKontakty = document.getElementById('mpKontakty');
-            const klucze = Object.keys(dane.kontakty || {});
-            if (klucze.length === 0) {
-                kontenerKontakty.innerHTML = '';
-            } else {
-                let html = '<div class="kontakt-tytul">Kontakt do sprzedawców</div>';
-                for (const os of klucze) {
-                    const ig = dane.kontakty[os];
-                    html += `
-                        <div class="kontakt-item">
-                            <span class="kontakt-osiedle">🏠 ${os}</span>
-                            📷 <a href="https://instagram.com/${ig}" target="_blank" class="kontakt-ig">@${ig}</a>
-                        </div>
-                    `;
-                }
-                kontenerKontakty.innerHTML = html;
             }
 
             document.getElementById('widokSmaki').classList.add('aktywny');
