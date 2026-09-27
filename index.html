@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sklep Vape Bydgoszcz</title>
+    <style>
+        body {
+            background: #000;
+            color: #fff;
+            font-family: sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #00ffcc;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+        .katalog {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .kafelek {
+            background: #111;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 255, 204, 0.1);
+            transition: transform 0.2s;
+        }
+        .kafelek:hover {
+            transform: scale(1.02);
+        }
+        .kafelek img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .kafelek h2 {
+            margin: 10px 0 5px;
+            font-size: 1.3rem;
+            color: #00ffcc;
+        }
+        .kafelek p {
+            margin: 5px 0;
+            color: #ccc;
+            font-size: 0.95rem;
+        }
+        .cena {
+            color: #00ffcc;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #555;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Nasze Produkty</h1>
+    <div class="katalog">
+        <!-- Przykładowy produkt (na razie statyczny) -->
+        <div class="kafelek">
+            <img src="https://via.placeholder.com/250x200/111/00ffcc?text=Zdjecie" alt="Produkt">
+            <h2>Przykładowy Produkt</h2>
+            <p class="cena">Cena: 25 zł</p>
+            <p>Ilość: 10 szt.</p>
+            <p>Smaki: Mango, Truskawka</p>
+        </div>
+    </div>
+    <div class="footer">
+        bdgvape.xyz
+    </div>
+</body>
+</html>
