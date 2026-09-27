@@ -21,7 +21,6 @@
         .hero .opis { font-size: 1.1rem; color: #bbb; max-width: 650px; margin: 0 auto 6px auto; line-height: 1.6; font-weight: 300; }
         .hero .dol { color: #666; font-size: 0.9rem; letter-spacing: 1px; max-width: 650px; margin: 0 auto 25px auto; line-height: 1.6; font-weight: 300; }
 
-        /* Przycisk "Gdzie sprzedajemy?" */
         .btn-gdzie {
             background: transparent;
             color: #fff;
@@ -87,7 +86,6 @@
         }
         .zamknij:hover { background: #fff; color: #000; border-color: #fff; }
 
-        /* ===== MODAL PRODUKTU ===== */
         .modal-produkt { background: #0a0a0a; border: 1px solid #333; border-radius: 12px; max-width: 900px; width: 100%; padding: 40px; position: relative; box-shadow: 0 20px 80px rgba(0,0,0,0.9); display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
         .modal-produkt .lewa img { width: 100%; border-radius: 8px; background: #141414; object-fit: cover; max-height: 400px; }
         .modal-produkt .prawa { display: flex; flex-direction: column; justify-content: center; }
@@ -99,7 +97,8 @@
 
         /* ===== MODAL GDZIE SPRZEDAJEMY ===== */
         .modal-gdzie { background: #0a0a0a; border: 1px solid #333; border-radius: 12px; padding: 45px; max-width: 600px; width: 100%; position: relative; box-shadow: 0 20px 80px rgba(0,0,0,0.9); }
-        .modal-gdzie h3 { color: #fff; font-size: 1.4rem; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 4px; font-weight: 800; text-align: center; }
+        .modal-gdzie h3 { color: #fff; font-size: 1.4rem; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 4px; font-weight: 800; text-align: center; }
+        .modal-gdzie .podtytul { color: #777; font-size: 0.8rem; letter-spacing: 1px; text-align: center; margin-bottom: 30px; font-weight: 300; }
         .modal-gdzie .sprzedawca { background: #111; border: 1px solid #1f1f1f; border-radius: 8px; padding: 16px 20px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
         .modal-gdzie .sprzedawca .region { color: #fff; font-weight: 600; font-size: 0.95rem; letter-spacing: 1px; }
         .modal-gdzie .sprzedawca .lokalizacja { color: #888; font-size: 0.9rem; letter-spacing: 2px; font-weight: 700; }
@@ -186,6 +185,7 @@
         <div class="modal-gdzie">
             <button class="zamknij" onclick="zamknijGdzie()">×</button>
             <h3>Sprzedawcy</h3>
+            <p class="podtytul">Nie musisz jeździć daleko po nasze produkty — wybierz najbliższego sprzedawcę</p>
 
             <div class="sprzedawca">
                 <span class="region">OSG i okolice</span>
