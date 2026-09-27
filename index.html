@@ -96,6 +96,20 @@
         .modal-produkt .opis-tresc { color: #bbb; font-size: 0.82rem; line-height: 1.5; white-space: pre-line; font-weight: 300; word-wrap: break-word; overflow-wrap: break-word; word-break: break-word; }
         .modal-produkt .opis-sekcja { margin-bottom: 20px; }
 
+        /* Osiedla w modalu */
+        .osiedle-blok { background: #111; border: 1px solid #1f1f1f; border-radius: 8px; padding: 12px 15px; margin-bottom: 12px; }
+        .osiedle-naglowek { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid #1f1f1f; }
+        .osiedle-nazwa { color: #fff; font-weight: 700; font-size: 0.9rem; letter-spacing: 1px; }
+        .osiedle-ilosc { color: #888; font-size: 0.8rem; letter-spacing: 1px; font-weight: 600; }
+        .smak-linia { display: flex; justify-content: space-between; padding: 4px 0; font-size: 0.82rem; color: #bbb; }
+        .smak-linia .smak-nazwa { color: #ccc; }
+        .smak-linia .smak-ilosc { color: #fff; font-weight: 600; }
+        .osiedle-brak { color: #666; font-size: 0.8rem; font-style: italic; }
+
+        /* Notka o transferze */
+        .transfer-notka { margin-top: 20px; padding-top: 18px; border-top: 1px solid #1f1f1f; color: #999; font-size: 0.78rem; line-height: 1.6; text-align: left; font-weight: 300; }
+        .transfer-notka b { color: #fff; font-weight: 600; }
+
         .modal-gdzie { background: #0a0a0a; border: 1px solid #333; border-radius: 12px; padding: 45px; max-width: 600px; width: 100%; position: relative; box-shadow: 0 20px 80px rgba(0,0,0,0.9); }
         .modal-gdzie h3 { color: #fff; font-size: 1.4rem; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 4px; font-weight: 800; text-align: center; }
         .modal-gdzie .podtytul { color: #777; font-size: 0.8rem; letter-spacing: 1px; text-align: center; margin-bottom: 30px; font-weight: 300; }
@@ -182,8 +196,12 @@
                 </div>
 
                 <div>
-                    <div class="opis-label">Smaki / Ilość</div>
-                    <div class="opis-tresc" id="mpOpis"></div>
+                    <div class="opis-label">Dostępność w osiedlach</div>
+                    <div id="mpOsiedla"></div>
+                </div>
+
+                <div class="transfer-notka">
+                    <b>Transfer?</b> Twój najbliższy sprzedawca nie ma jakiegoś smaku, a nie chce Ci się iść na inne osiedle? Zapytaj o transfer (przekazanie produktu z jednego osiedla na drugie).
                 </div>
             </div>
         </div>
@@ -226,29 +244,49 @@
             return c + ' zł';
         }
 
-        function wyciagnijIlosc(opis) {
-            const linie = (opis || '').split('\n');
+        // Parsuje embed z Discorda:
+        // Cena: **25 zł**
+        // Ilość łącznie: **12 szt.**
+        //
+        // Osiedla:
+        // 🏠 OSG — 7 szt.
+        // 🏠 Szwederowo — 5 szt.
+        //
+        // Opis:
+        // ...treść...
+        function parsujProdukt(opis) {
+            const tekst = usunGwiazdki(opis || '');
+            const linie = tekst.split('\n');
+
+            const wynik = { cena: '', ilosc: '', osiedla: [], opis: '' };
+
+            let tryb = 'glowny'; // 'glowny' | 'osiedla' | 'opis'
+            let buforOpis = [];
 
             for (const l of linie) {
-                const lower = l.toLowerCase();
-                if (lower.startsWith('ilość łącznie:') || lower.startsWith('ilosc lacznie:') || lower.startsWith('ilość:') || lower.startsWith('ilosc:')) {
-                    const wartosc = usunGwiazdki(l.replace(/[^:]+:/, '')).replace('szt.', '').trim();
-                    if (wartosc) return wartosc;
+                const lower = l.toLowerCase().trim();
+
+                if (lower.startsWith('cena:')) {
+                    wynik.cena = l.replace(/cena:/i, '').trim();
+                } else if (lower.startsWith('ilość łącznie:') || lower.startsWith('ilosc lacznie:')) {
+                    wynik.ilosc = l.replace(/[^:]+:/, '').replace('szt.', '').trim();
+                } else if (lower === 'osiedla:') {
+                    tryb = 'osiedla';
+                } else if (lower === 'opis:') {
+                    tryb = 'opis';
+                } else if (tryb === 'osiedla') {
+                    // Format: 🏠 OSG — 7 szt.
+                    const m = l.match(/🏠\s*(.+?)\s*—\s*(\d+)\s*szt\./);
+                    if (m) {
+                        wynik.osiedla.push({ nazwa: m[1].trim(), ilosc: parseInt(m[2]) || 0, smaki: [] });
+                    }
+                } else if (tryb === 'opis') {
+                    if (l.trim() !== '') buforOpis.push(l);
                 }
             }
 
-            let suma = 0;
-            let znaleziono = false;
-            for (const l of linie) {
-                const match = l.match(/•.*—\s*(\d+)\s*szt\./);
-                if (match) {
-                    suma += parseInt(match[1]) || 0;
-                    znaleziono = true;
-                }
-            }
-            if (znaleziono) return String(suma);
-
-            return '—';
+            wynik.opis = buforOpis.join('<br>');
+            return wynik;
         }
 
         // ===== KONTAKT =====
@@ -265,53 +303,40 @@
         function otworzProdukt(index) {
             const p = produktyGlobal[index];
             if (!p) return;
+
+            const dane = parsujProdukt(p.opis);
+
             document.getElementById('mpZdjecie').src = p.zdjecie || '';
             document.getElementById('mpNazwa').textContent = p.nazwa;
+            document.getElementById('mpCena').textContent = formatujCene(dane.cena);
 
-            const tekst = usunGwiazdki(p.opis);
-            const linie = tekst.split('\n');
-
-            // Cena
-            let cena = '';
-            for (const l of linie) {
-                if (l.toLowerCase().startsWith('cena:')) {
-                    cena = l.replace(/cena:/i, '').trim();
-                    break;
-                }
-            }
-            document.getElementById('mpCena').textContent = formatujCene(cena);
-
-            // Opis (linie po "Opis:" do "Smaki:" lub do końca)
-            const idxOpis = linie.findIndex(l => l.toLowerCase().startsWith('opis:'));
-            let opisTxt = '';
-            if (idxOpis !== -1) {
-                for (let i = idxOpis + 1; i < linie.length; i++) {
-                    if (linie[i].toLowerCase().startsWith('smaki:')) break;
-                    if (linie[i].trim() === '') continue;
-                    opisTxt += (opisTxt ? '<br>' : '') + linie[i];
-                }
-            }
-
+            // Opis
             const sekcjaOpis = document.getElementById('mpOpisSekcja');
-            if (opisTxt) {
-                document.getElementById('mpOpisOpis').innerHTML = opisTxt;
+            if (dane.opis) {
+                document.getElementById('mpOpisOpis').innerHTML = dane.opis;
                 sekcjaOpis.style.display = 'block';
             } else {
                 sekcjaOpis.style.display = 'none';
             }
 
-            // Smaki (od "Smaki:" do "Opis:" lub do końca)
-            const idxSmaki = linie.findIndex(l => l.toLowerCase().startsWith('smaki:'));
-            let smakiTxt = '';
-            if (idxSmaki !== -1) {
-                for (let i = idxSmaki; i < linie.length; i++) {
-                    if (linie[i].toLowerCase().startsWith('opis:')) break;
-                    smakiTxt += (smakiTxt ? '<br>' : '') + linie[i];
-                }
+            // Osiedla
+            const kontener = document.getElementById('mpOsiedla');
+            if (dane.osiedla.length === 0) {
+                kontener.innerHTML = '<div class="osiedle-brak">Brak przypisanych osiedli.</div>';
             } else {
-                smakiTxt = tekst.replace(/\n/g, '<br>');
+                kontener.innerHTML = '';
+                for (const os of dane.osiedla) {
+                    kontener.innerHTML += `
+                        <div class="osiedle-blok">
+                            <div class="osiedle-naglowek">
+                                <span class="osiedle-nazwa">🏠 ${os.nazwa}</span>
+                                <span class="osiedle-ilosc">${os.ilosc} szt.</span>
+                            </div>
+                            <div class="osiedle-brak">(szczegóły smaków dostępne u sprzedawcy)</div>
+                        </div>
+                    `;
+                }
             }
-            document.getElementById('mpOpis').innerHTML = smakiTxt;
 
             document.getElementById('modalProdukt').classList.add('aktywny');
         }
@@ -336,21 +361,16 @@
                     return;
                 }
                 produkty.forEach((produkt, index) => {
-                    let cena = '—';
-                    const linie = (produkt.opis || '').split('\n');
-                    for (const l of linie) {
-                        if (l.toLowerCase().startsWith('cena:')) cena = usunGwiazdki(l.replace(/cena:/i, '')).trim();
-                    }
-                    const ilosc = wyciagnijIlosc(produkt.opis);
+                    const dane = parsujProdukt(produkt.opis);
 
                     katalog.innerHTML += `
                         <div class="kafelek">
                             ${produkt.zdjecie ? `<img src="${produkt.zdjecie}" alt="${produkt.nazwa}" class="zdjecie">` : '<div class="zdjecie"></div>'}
                             <div class="tresc">
                                 <h3>${produkt.nazwa}</h3>
-                                <div class="cena">${formatujCene(cena)}</div>
-                                <div class="ilosc">Dostępne: ${ilosc} szt.</div>
-                                <button class="btn-kup" onclick="otworzProdukt(${index})">Kup / Smaki</button>
+                                <div class="cena">${formatujCene(dane.cena)}</div>
+                                <div class="ilosc">Dostępne: ${dane.ilosc || '0'} szt.</div>
+                                <button class="btn-kup" onclick="otworzProdukt(${index})">Kup / Dostępność</button>
                             </div>
                         </div>
                     `;
