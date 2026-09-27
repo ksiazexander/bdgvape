@@ -3,158 +3,299 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>bdgvape.xyz</title>
+    <title>BDGVAPE — Sklep Vape Bydgoszcz</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            background: #000;
+            background: #0a0a0a;
             color: #fff;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             min-height: 100vh;
-            padding: 0;
         }
 
-        /* Górny pasek z logo */
+        a { color: inherit; text-decoration: none; }
+
+        /* ===== GÓRNY PASEK ===== */
         .topbar {
-            padding: 20px 40px;
+            background: #000;
+            padding: 18px 40px;
             display: flex;
             align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #1a1a1a;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
-        .topbar .logo {
-            color: #fff;
-            font-size: 1.1rem;
-            font-weight: 600;
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 900;
             letter-spacing: 1px;
-            opacity: 0.85;
+            color: #00e676;
+            text-transform: uppercase;
         }
 
-        /* Panel główny */
+        .logo span { color: #fff; font-weight: 400; font-size: 0.8rem; margin-left: 8px; letter-spacing: 2px; }
+
+        .nav {
+            display: flex;
+            gap: 28px;
+            font-size: 0.9rem;
+            color: #bbb;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .nav a:hover { color: #00e676; }
+
+        .koszyk {
+            background: #00e676;
+            color: #000;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+
+        /* ===== HERO ===== */
         .hero {
-            padding: 60px 40px 80px 40px;
-            max-width: 1200px;
-            margin: 0 auto;
+            position: relative;
+            padding: 100px 40px 80px 40px;
+            text-align: center;
+            background: radial-gradient(circle at 50% 0%, #052e1a 0%, #0a0a0a 70%);
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        .hero .top-info {
+            color: #666;
+            font-size: 0.8rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
         }
 
         .hero h1 {
-            font-size: 5rem;
+            font-size: 7rem;
             font-weight: 900;
-            letter-spacing: 4px;
-            color: #fff;
+            letter-spacing: 6px;
+            color: #00e676;
             line-height: 1;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             text-transform: uppercase;
+            text-shadow: 0 0 60px rgba(0,230,118,0.4);
         }
 
-        .hero p {
-            font-size: 1.15rem;
+        .hero .opis {
+            font-size: 1.2rem;
             color: #ccc;
-            line-height: 1.6;
             max-width: 700px;
+            margin: 0 auto 15px auto;
+            line-height: 1.6;
         }
 
-        .hero p.sub {
-            margin-top: 10px;
-            color: #888;
-            font-size: 1rem;
-        }
-
-        /* Sekcja produktów */
-        .sekcja-produkty {
-            padding: 40px 40px 80px 40px;
-            max-width: 1200px;
-            margin: 0 auto;
-            border-top: 1px solid #222;
-        }
-
-        .sekcja-produkty h2 {
-            font-size: 1.5rem;
-            color: #fff;
-            font-weight: 700;
+        .hero .dol {
+            color: #666;
+            font-size: 0.95rem;
             letter-spacing: 2px;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
+        }
+
+        .hero .przyciski {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border-radius: 4px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
             text-transform: uppercase;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: #00e676;
+            color: #000;
+        }
+
+        .btn-primary:hover { background: #00c853; transform: translateY(-2px); }
+
+        .btn-outline {
+            background: transparent;
+            color: #fff;
+            border: 1px solid #333;
+        }
+
+        .btn-outline:hover { border-color: #00e676; color: #00e676; }
+
+        /* ===== PASEK ZAUFANIA ===== */
+        .pasek-info {
+            text-align: center;
+            padding: 25px 20px;
+            border-bottom: 1px solid #1a1a1a;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .pasek-info b { color: #fff; }
+
+        /* ===== SEKCJA PRODUKTÓW ===== */
+        .sekcja {
+            padding: 60px 40px 80px 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .sekcja .naglowek {
+            color: #00e676;
+            font-size: 0.8rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .sekcja h2 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #fff;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 40px;
         }
 
         .katalog {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             gap: 20px;
         }
 
         .kafelek {
-            background: #0a0a0a;
+            background: #111;
             border: 1px solid #1f1f1f;
-            border-radius: 12px;
-            padding: 15px;
-            text-align: center;
-            transition: transform 0.2s, border-color 0.2s;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.2s;
+            position: relative;
+            display: flex;
+            flex-direction: column;
         }
 
         .kafelek:hover {
+            border-color: #00e676;
             transform: translateY(-4px);
-            border-color: #444;
         }
 
-        .kafelek img {
+        .kafelek .badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #00e676;
+            color: #000;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 3px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .kafelek .zdjecie {
             width: 100%;
-            height: 200px;
+            height: 220px;
             object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 12px;
+            background: #1a1a1a;
+        }
+
+        .kafelek .tresc {
+            padding: 15px;
+            text-align: center;
         }
 
         .kafelek h3 {
-            margin: 8px 0;
-            font-size: 1.2rem;
+            font-size: 1rem;
             color: #fff;
             font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
         }
 
         .kafelek p {
-            margin: 4px 0;
-            color: #aaa;
-            font-size: 0.9rem;
-            line-height: 1.4;
+            color: #999;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            white-space: pre-line;
         }
 
+        /* ===== STOPKA ===== */
         .footer {
-            text-align: center;
+            border-top: 1px solid #1a1a1a;
             padding: 40px 20px;
+            text-align: center;
             color: #444;
             font-size: 0.85rem;
-            border-top: 1px solid #1a1a1a;
+            letter-spacing: 1px;
         }
 
         @media (max-width: 700px) {
-            .hero h1 { font-size: 2.5rem; letter-spacing: 2px; }
-            .hero { padding: 40px 20px 60px 20px; }
-            .sekcja-produkty { padding: 30px 20px 60px 20px; }
+            .hero h1 { font-size: 3.5rem; letter-spacing: 3px; }
+            .hero { padding: 60px 20px 50px 20px; }
+            .sekcja { padding: 40px 20px 60px 20px; }
+            .sekcja h2 { font-size: 1.6rem; }
             .topbar { padding: 15px 20px; }
+            .nav { display: none; }
         }
     </style>
 </head>
 <body>
 
+    <!-- GÓRNY PASEK -->
     <div class="topbar">
-        <div class="logo">bdgvape.xyz</div>
+        <div class="logo">BDGVAPE <span>Bydgoszcz</span></div>
+        <div class="nav">
+            <a href="#produkty">Sklep</a>
+            <a href="#">Jednorazówki</a>
+            <a href="#">Liquidy</a>
+            <a href="#">Kontakt</a>
+        </div>
+        <a href="#" class="koszyk">Koszyk</a>
     </div>
 
+    <!-- HERO -->
     <div class="hero">
+        <div class="top-info">Darmowa dostawa · Tylko 18+</div>
         <h1>BDGVAPE</h1>
-        <p>Twój nowy sklep z jednorazówkami / liquidami w Bydgoszczy.</p>
-        <p class="sub">Zjedź niżej, aby zapoznać się z naszą ofertą i formami kupna.</p>
+        <p class="opis">Twój nowy sklep z jednorazówkami / liquidami w Bydgoszczy.</p>
+        <p class="dol">Zjedź niżej, aby zapoznać się z naszą ofertą i formami kupna.</p>
+        <div class="przyciski">
+            <a href="#produkty" class="btn btn-primary">Do sklepu →</a>
+            <a href="#" class="btn btn-outline">Kontakt</a>
+        </div>
     </div>
 
-    <div class="sekcja-produkty">
+    <!-- PASEK ZAUFANIA -->
+    <div class="pasek-info">
+        ⭐⭐⭐⭐⭐ <b>5.0 / 5.0</b> — zaufany sklep w Bydgoszczy
+    </div>
+
+    <!-- PRODUKTY -->
+    <div class="sekcja" id="produkty">
+        <div class="naglowek">Bestsellery</div>
         <h2>Nasze produkty</h2>
         <div class="katalog" id="katalog">
             <p style="color:#666;">Ładowanie produktów...</p>
         </div>
     </div>
 
-    <div class="footer">bdgvape.xyz</div>
+    <!-- STOPKA -->
+    <div class="footer">bdgvape.xyz — Bydgoszcz</div>
 
     <script>
         async function pobierzProdukty() {
@@ -174,9 +315,12 @@
                 for (const produkt of produkty) {
                     katalog.innerHTML += `
                         <div class="kafelek">
-                            ${produkt.zdjecie ? `<img src="${produkt.zdjecie}" alt="${produkt.nazwa}">` : ''}
-                            <h3>${produkt.nazwa}</h3>
-                            <p>${produkt.opis.replace(/\n/g, '<br>')}</p>
+                            <span class="badge">Bestseller</span>
+                            ${produkt.zdjecie ? `<img src="${produkt.zdjecie}" alt="${produkt.nazwa}" class="zdjecie">` : '<div class="zdjecie"></div>'}
+                            <div class="tresc">
+                                <h3>${produkt.nazwa}</h3>
+                                <p>${produkt.opis.replace(/\n/g, '<br>')}</p>
+                            </div>
                         </div>
                     `;
                 }
