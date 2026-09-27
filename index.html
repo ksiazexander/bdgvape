@@ -103,4 +103,269 @@
         .osiedle-ilosc { color: #888; font-size: 0.8rem; letter-spacing: 1px; font-weight: 600; }
         .smak-linia { display: flex; justify-content: space-between; padding: 3px 0; font-size: 0.82rem; color: #bbb; }
         .smak-linia .smak-nazwa { color: #ccc; }
-        .smak-linia .smak-ilosc { color: #fff; font-weight: 
+        .smak-linia .smak-ilosc { color: #fff; font-weight: 600; }
+        .osiedle-brak { color: #666; font-size: 0.8rem; font-style: italic; }
+
+        .transfer-notka { margin-top: 20px; padding-top: 18px; border-top: 1px solid #1f1f1f; color: #999; font-size: 0.78rem; line-height: 1.6; text-align: left; font-weight: 300; }
+        .transfer-notka b { color: #fff; font-weight: 600; }
+
+        .modal-gdzie { background: #0a0a0a; border: 1px solid #333; border-radius: 12px; padding: 45px; max-width: 600px; width: 100%; position: relative; box-shadow: 0 20px 80px rgba(0,0,0,0.9); }
+        .modal-gdzie h3 { color: #fff; font-size: 1.4rem; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 4px; font-weight: 800; text-align: center; }
+        .modal-gdzie .podtytul { color: #777; font-size: 0.8rem; letter-spacing: 1px; text-align: center; margin-bottom: 30px; font-weight: 300; }
+        .modal-gdzie .sprzedawca { background: #111; border: 1px solid #1f1f1f; border-radius: 8px; padding: 16px 20px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+        .modal-gdzie .sprzedawca .region { color: #fff; font-weight: 600; font-size: 0.95rem; letter-spacing: 1px; }
+        .modal-gdzie .sprzedawca .lokalizacja { color: #888; font-size: 0.9rem; letter-spacing: 2px; font-weight: 700; }
+        .modal-gdzie .notka { margin-top: 30px; padding-top: 25px; border-top: 1px solid #1f1f1f; color: #999; font-size: 0.85rem; line-height: 1.7; text-align: left; font-weight: 300; }
+        .modal-gdzie .notka b { color: #fff; font-weight: 600; }
+        .modal-gdzie .notka .szkola { color: #ccc; font-size: 0.9rem; }
+
+        @media (max-width: 800px) {
+            .modal-produkt { grid-template-columns: 1fr; padding: 25px; padding-top: 60px; }
+            .modal-produkt h2 { font-size: 1.4rem; }
+            .hero { padding: 40px 20px 40px 20px; }
+            .hero h1 { font-size: 3rem; letter-spacing: 4px; }
+            .hero .top-info { letter-spacing: 3px; font-size: 0.7rem; }
+            .sekcja { padding: 40px 20px 60px 20px; }
+            .sekcja h2 { font-size: 1.5rem; letter-spacing: 2px; }
+            .topbar { padding: 15px 20px; }
+            .logo span { display: none; }
+            .modal-gdzie { padding: 30px 20px; }
+            .modal-gdzie h3 { font-size: 1.1rem; letter-spacing: 3px; }
+            .modal-gdzie .sprzedawca { flex-direction: column; gap: 6px; text-align: center; }
+
+            .zamknij {
+                width: 54px;
+                height: 54px;
+                font-size: 2.2rem;
+                top: 8px;
+                right: 8px;
+                background: rgba(255,255,255,0.15);
+                border: 2px solid #666;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="topbar">
+        <div class="logo">BDGVAPE <span>Bydgoszcz</span></div>
+        <button class="btn-kontakt" onclick="pokazKontakt()">Kontakt</button>
+    </div>
+
+    <div class="hero">
+        <div class="top-info">Odbiór w Bydgoszczy i okolicach · Tylko 18+</div>
+        <h1>BDGVAPE</h1>
+        <p class="opis">Twój nowy sklep z jednorazówkami / liquidami w Bydgoszczy.</p>
+        <p class="dol">Zjedź niżej, aby zapoznać się z naszą ofertą i formami kupna. Odbieraj swoje produkty od różnych sprzedawców w zależności od Twojego położenia.</p>
+        <button class="btn-gdzie" onclick="pokazGdzie()">🏠 · Gdzie sprzedajemy? (kliknij)</button>
+    </div>
+
+    <div class="sekcja" id="produkty">
+        <div class="naglowek">Bestsellery</div>
+        <h2>Nasze produkty</h2>
+        <div class="katalog" id="katalog">
+            <p style="color:#666;">Ładowanie produktów...</p>
+        </div>
+    </div>
+
+    <div class="footer">bdgvape.xyz — Bydgoszcz</div>
+
+    <div class="modal-tlo" id="modalKontakt">
+        <div class="modal">
+            <button class="zamknij" onclick="zamknijKontakt()">×</button>
+            <h3>Kontakt</h3>
+            <p>ig: ggffg</p>
+        </div>
+    </div>
+
+    <div class="modal-tlo" id="modalProdukt">
+        <div class="modal-produkt">
+            <button class="zamknij" onclick="zamknijProdukt()">×</button>
+            <div class="lewa">
+                <img id="mpZdjecie" src="" alt="">
+            </div>
+            <div class="prawa">
+                <div class="kategoria">Produkt</div>
+                <h2 id="mpNazwa"></h2>
+                <div class="cena-duza" id="mpCena"></div>
+
+                <div>
+                    <div class="opis-label">Dostępność w osiedlach</div>
+                    <div id="mpOsiedla"></div>
+                </div>
+
+                <div class="transfer-notka">
+                    <b>Transfer?</b> Twój najbliższy sprzedawca nie ma jakiegoś smaku, a nie chce Ci się iść na inne osiedle? Zapytaj o transfer (przekazanie produktu z jednego osiedla na drugie).
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-tlo" id="modalGdzie">
+        <div class="modal-gdzie">
+            <button class="zamknij" onclick="zamknijGdzie()">×</button>
+            <h3>Sprzedawcy</h3>
+            <p class="podtytul">Nie musisz jeździć daleko po nasze produkty — wybierz najbliższego sprzedawcę</p>
+
+            <div class="sprzedawca">
+                <span class="region">OSG i okolice</span>
+                <span class="lokalizacja">🏫 2LO</span>
+            </div>
+            <div class="sprzedawca">
+                <span class="region">Szwederowo i okolice</span>
+                <span class="lokalizacja">🏫 2LO</span>
+            </div>
+
+            <div class="notka">
+                <p class="szkola">Sprawdź, do jakiej szkoły chodzi sprzedawca — możliwe kupno w szkole.</p>
+                <p style="margin-top: 12px;">Aby dowiedzieć się, czy kupno w Twojej okolicy jest możliwe, upewnij się, że przy informacjach o wybranym produkcie jest napisane, które smaki ma Twój najbliższy sprzedawca.</p>
+                <p style="margin-top: 12px;"><b>Transfer?</b> Twój wybrany sprzedawca nie ma jakiegoś produktu, a nie chce Ci się iść na okolice sprzedawcy drugiego? Zapytaj o transfer (przekazanie produktów jednego sprzedawcy do drugiego).</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let produktyGlobal = [];
+
+        function usunGwiazdki(tekst) { return (tekst || '').replace(/\*\*/g, ''); }
+
+        function formatujCene(cena) {
+            if (!cena || cena === '—') return '—';
+            const c = String(cena).trim();
+            if (/zł/i.test(c)) return c;
+            return c + ' zł';
+        }
+
+        // Parsuje embed z Discorda
+        function parsujProdukt(opis) {
+            const tekst = usunGwiazdki(opis || '');
+            const linie = tekst.split('\n');
+            const wynik = { cena: '', ilosc: '', smaki: [], osiedla: [] };
+
+            let tryb = 'glowny';
+
+            for (const l of linie) {
+                const lower = l.toLowerCase().trim();
+
+                if (lower.startsWith('cena:')) {
+                    wynik.cena = l.replace(/cena:/i, '').trim();
+                } else if (lower.startsWith('ilość łącznie:') || lower.startsWith('ilosc lacznie:')) {
+                    wynik.ilosc = l.replace(/[^:]+:/, '').replace('szt.', '').trim();
+                } else if (lower === 'smaki:') {
+                    tryb = 'smaki';
+                } else if (lower === 'osiedla:') {
+                    tryb = 'osiedla';
+                } else if (lower === 'opis:') {
+                    tryb = 'opis';
+                } else if (tryb === 'smaki') {
+                    // Format: • Mango — 3 szt.
+                    const m = l.match(/•\s*(.+?)\s*—\s*(\d+)\s*szt\./);
+                    if (m) wynik.smaki.push({ nazwa: m[1].trim(), ilosc: parseInt(m[2]) || 0 });
+                } else if (tryb === 'osiedla') {
+                    // Format: 🏠 OSG — 7 szt.
+                    const m = l.match(/🏠\s*(.+?)\s*—\s*(\d+)\s*szt\./);
+                    if (m) wynik.osiedla.push({ nazwa: m[1].trim(), ilosc: parseInt(m[2]) || 0, smaki: [] });
+                }
+                // tryb 'opis' pomijamy – nie wyświetlamy na stronie
+            }
+
+            return wynik;
+        }
+
+        // ===== KONTAKT =====
+        function pokazKontakt() { document.getElementById('modalKontakt').classList.add('aktywny'); }
+        function zamknijKontakt() { document.getElementById('modalKontakt').classList.remove('aktywny'); }
+        document.getElementById('modalKontakt').addEventListener('click', function(e) { if (e.target === this) zamknijKontakt(); });
+
+        // ===== GDZIE SPRZEDAJEMY =====
+        function pokazGdzie() { document.getElementById('modalGdzie').classList.add('aktywny'); }
+        function zamknijGdzie() { document.getElementById('modalGdzie').classList.remove('aktywny'); }
+        document.getElementById('modalGdzie').addEventListener('click', function(e) { if (e.target === this) zamknijGdzie(); });
+
+        // ===== PRODUKT =====
+        function otworzProdukt(index) {
+            const p = produktyGlobal[index];
+            if (!p) return;
+            const dane = parsujProdukt(p.opis);
+
+            document.getElementById('mpZdjecie').src = p.zdjecie || '';
+            document.getElementById('mpNazwa').textContent = p.nazwa;
+            document.getElementById('mpCena').textContent = formatujCene(dane.cena);
+
+            const kontener = document.getElementById('mpOsiedla');
+            if (dane.osiedla.length === 0) {
+                kontener.innerHTML = '<div class="osiedle-brak">Brak dostępności w osiedlach.</div>';
+            } else {
+                kontener.innerHTML = '';
+                for (const os of dane.osiedla) {
+                    kontener.innerHTML += `
+                        <div class="osiedle-blok">
+                            <div class="osiedle-naglowek">
+                                <span class="osiedle-nazwa">🏠 ${os.nazwa}</span>
+                                <span class="osiedle-ilosc">${os.ilosc} szt.</span>
+                            </div>
+                            <div class="osiedle-brak">(szczegóły smaków u sprzedawcy)</div>
+                        </div>
+                    `;
+                }
+            }
+
+            document.getElementById('modalProdukt').classList.add('aktywny');
+        }
+
+        function zamknijProdukt() { document.getElementById('modalProdukt').classList.remove('aktywny'); }
+        document.getElementById('modalProdukt').addEventListener('click', function(e) { if (e.target === this) zamknijProdukt(); });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') { zamknijKontakt(); zamknijProdukt(); zamknijGdzie(); }
+        });
+
+        async function pobierzProdukty() {
+            try {
+                const response = await fetch('https://bdgvape-api.cosinusekk.workers.dev');
+                if (!response.ok) throw new Error('Błąd pobierania');
+                const produkty = await response.json();
+                produktyGlobal = produkty;
+                const katalog = document.getElementById('katalog');
+                katalog.innerHTML = '';
+                if (produkty.length === 0) {
+                    katalog.innerHTML = '<p style="color:#666;">Brak produktów.</p>';
+                    return;
+                }
+                produkty.forEach((produkt, index) => {
+                    const dane = parsujProdukt(produkt.opis);
+
+                    // Lista smaków globalnych w kafelku
+                    let smakiHtml = '';
+                    if (dane.smaki.length > 0) {
+                        smakiHtml = '<div class="smaki-lista">';
+                        for (const s of dane.smaki) {
+                            smakiHtml += `<div class="smak-wiersz"><span>${s.nazwa}</span><span>${s.ilosc} szt.</span></div>`;
+                        }
+                        smakiHtml += '</div>';
+                    }
+
+                    katalog.innerHTML += `
+                        <div class="kafelek">
+                            ${produkt.zdjecie ? `<img src="${produkt.zdjecie}" alt="${produkt.nazwa}" class="zdjecie">` : '<div class="zdjecie"></div>'}
+                            <div class="tresc">
+                                <h3>${produkt.nazwa}</h3>
+                                <div class="cena">${formatujCene(dane.cena)}</div>
+                                <div class="ilosc">Dostępne: ${dane.ilosc || '0'} szt.</div>
+                                ${smakiHtml}
+                                <button class="btn-kup" onclick="otworzProdukt(${index})">Kup / Osiedla</button>
+                            </div>
+                        </div>
+                    `;
+                });
+            } catch (error) {
+                document.getElementById('katalog').innerHTML = '<p style="color:#666;">Błąd ładowania produktów.</p>';
+                console.error(error);
+            }
+        }
+
+        pobierzProdukty();
+    </script>
+
+</body>
+</html>
