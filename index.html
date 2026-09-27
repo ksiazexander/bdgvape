@@ -93,6 +93,9 @@
         .smak-linia-mala .smak-ilosc { color: #fff; font-weight: 600; }
         .osiedle-brak { color: #666; font-size: 0.85rem; font-style: italic; padding: 8px 0; }
 
+        .osiedle-ig { margin-top: 8px; padding-top: 8px; border-top: 1px solid #1f1f1f; color: #ccc; font-size: 0.8rem; }
+        .osiedle-ig a { color: #fff; font-weight: 700; text-decoration: underline; }
+
         .opis-tresc { color: #bbb; font-size: 0.85rem; line-height: 1.6; font-weight: 300; word-wrap: break-word; overflow-wrap: break-word; word-break: break-word; }
 
         .btn-kup-osiedla {
@@ -127,20 +130,23 @@
             margin-bottom: 14px;
             font-weight: 300;
         }
-        .cta-zakup .cta-instagram {
-            display: inline-block;
-            background: #fff;
-            color: #000;
-            padding: 11px 24px;
-            border-radius: 4px;
-            font-weight: 800;
-            font-size: 0.85rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            text-decoration: none;
-            transition: all 0.2s;
+
+        /* Sekcja owner */
+        .owner-info {
+            margin-top: 16px;
+            padding-top: 14px;
+            border-top: 1px solid #1f1f1f;
+            color: #888;
+            font-size: 0.78rem;
+            line-height: 1.6;
+            text-align: center;
+            font-weight: 300;
         }
-        .cta-zakup .cta-instagram:hover { background: #ccc; }
+        .owner-info a {
+            color: #fff;
+            font-weight: 700;
+            text-decoration: underline;
+        }
 
         .widok { display: none; }
         .widok.aktywny { display: block; }
@@ -178,6 +184,7 @@
             .osiedle-nazwa { font-size: 0.8rem; }
             .osiedle-ilosc { font-size: 0.7rem; }
             .smak-linia-mala { padding: 2px 0; font-size: 0.72rem; }
+            .osiedle-ig { font-size: 0.72rem; margin-top: 6px; padding-top: 6px; }
             .opis-tresc { font-size: 0.75rem; line-height: 1.4; }
             .transfer-notka { font-size: 0.7rem; line-height: 1.4; margin-top: 12px; padding-top: 10px; }
             .btn-kup-osiedla { padding: 11px 18px; font-size: 0.75rem; margin-top: 14px; letter-spacing: 2px; }
@@ -185,7 +192,7 @@
             .cta-zakup { margin-top: 14px; padding-top: 12px; }
             .cta-zakup .cta-tytul { font-size: 0.85rem; letter-spacing: 2px; margin-bottom: 6px; }
             .cta-zakup .cta-opis { font-size: 0.75rem; line-height: 1.4; margin-bottom: 10px; }
-            .cta-zakup .cta-instagram { padding: 9px 18px; font-size: 0.75rem; letter-spacing: 2px; }
+            .owner-info { font-size: 0.72rem; margin-top: 10px; padding-top: 10px; }
             
             .hero { padding: 40px 20px 40px 20px; }
             .hero h1 { font-size: 3rem; letter-spacing: 4px; }
@@ -276,8 +283,12 @@
 
                     <div class="cta-zakup">
                         <div class="cta-tytul">GOTOWY/A NA ZAKUP?</div>
-                        <div class="cta-opis">Jeśli wybrałeś już smak i miejsce kupna — umów się na zakup. Napisz prywatną wiadomość na Instagramie.</div>
-                        <a id="mpInstagram" href="#" target="_blank" rel="noopener" class="cta-instagram">IG: LARPJARAS</a>
+                        <div class="cta-opis">Jeśli wybrałeś już smak i miejsce kupna — napisz prywatną wiadomość na Instagramie do sprzedawcy z Twojego osiedla (kontakt podany wyżej).</div>
+                    </div>
+
+                    <div class="owner-info">
+                        Pamiętaj, jeśli masz problem ze skontaktowaniem się ze sprzedawcą, możesz napisać do ownera:<br>
+                        IG: <a href="https://instagram.com/larpjaras" target="_blank">@larpjaras</a>
                     </div>
                 </div>
             </div>
@@ -326,7 +337,7 @@
         function parsujProdukt(opis) {
             const tekst = usunGwiazdki(opis || '');
             const linie = tekst.split('\n');
-            const wynik = { cena: '', smakiGlobalne: [], osiedla: [], opis: '', instagram: 'larpjaras' };
+            const wynik = { cena: '', smakiGlobalne: [], osiedla: [], opis: '', kontakty: {} };
 
             let tryb = 'glowny';
             let aktualneOsiedle = null;
@@ -339,14 +350,14 @@
                     wynik.cena = l.replace(/cena:/i, '').trim();
                 } else if (lower.startsWith('ilość łącznie:') || lower.startsWith('ilosc lacznie:')) {
                     // pomijamy
-                } else if (lower.startsWith('instagram:')) {
-                    const ig = l.replace(/instagram:/i, '').trim().replace(/^@/, '');
-                    if (ig) wynik.instagram = ig;
                 } else if (lower === 'smaki:') {
                     tryb = 'smaki';
                     aktualneOsiedle = null;
                 } else if (lower === 'osiedla:') {
                     tryb = 'osiedla';
+                    aktualneOsiedle = null;
+                } else if (lower === 'kontakty:') {
+                    tryb = 'kontakty';
                     aktualneOsiedle = null;
                 } else if (lower === 'opis:') {
                     tryb = 'opis';
@@ -362,6 +373,10 @@
                         const mSm = l.match(/•\s*(.+?)\s*—\s*(\d+)\s*szt\./);
                         if (mSm) aktualneOsiedle.smaki.push({ nazwa: mSm[1].trim(), ilosc: parseInt(mSm[2]) || 0 });
                     }
+                } else if (tryb === 'kontakty') {
+                    // Format: OSG: ig:larpjaras
+                    const m = l.match(/^(.+?):\s*(?:ig:)?\s*@?(.+)$/i);
+                    if (m) wynik.kontakty[m[1].trim()] = m[2].trim();
                 } else if (tryb === 'opis') {
                     if (l.trim() !== '') buforOpis.push(l);
                 }
@@ -388,11 +403,6 @@
             document.getElementById('mpNazwa').textContent = p.nazwa;
             document.getElementById('mpCena').textContent = formatujCene(dane.cena);
             document.getElementById('mpCenaMala').textContent = formatujCene(dane.cena);
-
-            // Instagram – ustaw link i tekst
-            const igLink = document.getElementById('mpInstagram');
-            igLink.href = 'https://instagram.com/' + dane.instagram;
-            igLink.textContent = 'IG: ' + dane.instagram.toUpperCase();
 
             const kontenerSmaki = document.getElementById('mpSmakiGlobalne');
             if (dane.smakiGlobalne.length === 0) {
@@ -426,80 +436,5 @@
                     } else {
                         smakiHtml = '<div class="osiedle-brak">brak smaków</div>';
                     }
-                    kontenerOs.innerHTML += `
-                        <div class="osiedle-blok">
-                            <div class="osiedle-naglowek">
-                                <span class="osiedle-nazwa">🏠 ${os.nazwa}</span>
-                                <span class="osiedle-ilosc">${os.ilosc} szt.</span>
-                            </div>
-                            ${smakiHtml}
-                        </div>
-                    `;
-                }
-            }
 
-            document.getElementById('widokSmaki').classList.add('aktywny');
-            document.getElementById('widokOsiedla').classList.remove('aktywny');
-            document.getElementById('btnWroc').style.display = 'none';
-
-            document.getElementById('modalProdukt').classList.add('aktywny');
-        }
-
-        function pokazOsiedla() {
-            document.getElementById('widokSmaki').classList.remove('aktywny');
-            document.getElementById('widokOsiedla').classList.add('aktywny');
-            document.getElementById('btnWroc').style.display = 'flex';
-        }
-
-        function wrocDoSmakow() {
-            document.getElementById('widokSmaki').classList.add('aktywny');
-            document.getElementById('widokOsiedla').classList.remove('aktywny');
-            document.getElementById('btnWroc').style.display = 'none';
-        }
-
-        function zamknijProdukt() { document.getElementById('modalProdukt').classList.remove('aktywny'); }
-        document.getElementById('modalProdukt').addEventListener('click', function(e) { if (e.target === this) zamknijProdukt(); });
-
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') { zamknijKontakt(); zamknijProdukt(); zamknijGdzie(); }
-        });
-
-        async function pobierzProdukty() {
-            try {
-                const response = await fetch('https://bdgvape-api.cosinusekk.workers.dev');
-                if (!response.ok) throw new Error('Błąd pobierania');
-                const produkty = await response.json();
-                produktyGlobal = produkty;
-                const katalog = document.getElementById('katalog');
-                katalog.innerHTML = '';
-                if (produkty.length === 0) {
-                    katalog.innerHTML = '<p style="color:#666;">Brak produktów.</p>';
-                    return;
-                }
-                produkty.forEach((produkt, index) => {
-                    const dane = parsujProdukt(produkt.opis);
-                    const iloscGlobalna = dane.smakiGlobalne.reduce((a, b) => a + b.ilosc, 0);
-
-                    katalog.innerHTML += `
-                        <div class="kafelek">
-                            ${produkt.zdjecie ? `<img src="${produkt.zdjecie}" alt="${produkt.nazwa}" class="zdjecie">` : '<div class="zdjecie"></div>'}
-                            <div class="tresc">
-                                <h3>${produkt.nazwa}</h3>
-                                <div class="cena">${formatujCene(dane.cena)}</div>
-                                <div class="ilosc">Dostępne: ${iloscGlobalna} szt.</div>
-                                <button class="btn-kup" onclick="otworzProdukt(${index})">Smaki</button>
-                            </div>
-                        </div>
-                    `;
-                });
-            } catch (error) {
-                document.getElementById('katalog').innerHTML = '<p style="color:#666;">Błąd ładowania produktów.</p>';
-                console.error(error);
-            }
-        }
-
-        pobierzProdukty();
-    </script>
-
-</body>
-</html>
+                    const ig = dane.k
