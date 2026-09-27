@@ -93,7 +93,6 @@
         .smak-linia-mala .smak-ilosc { color: #fff; font-weight: 600; }
         .osiedle-brak { color: #666; font-size: 0.85rem; font-style: italic; padding: 8px 0; }
 
-        /* Opis produktu w modalu */
         .opis-tresc { color: #bbb; font-size: 0.85rem; line-height: 1.6; font-weight: 300; word-wrap: break-word; overflow-wrap: break-word; word-break: break-word; }
 
         .btn-kup-osiedla {
@@ -121,8 +120,29 @@
         .modal-gdzie .notka .szkola { color: #ccc; font-size: 0.9rem; }
 
         @media (max-width: 800px) {
-            .modal-produkt { grid-template-columns: 1fr; padding: 25px; padding-top: 60px; }
-            .modal-produkt h2 { font-size: 1.4rem; }
+            .modal-produkt { 
+                grid-template-columns: 1fr; 
+                padding: 18px; 
+                padding-top: 55px; 
+                gap: 12px; 
+            }
+            .modal-produkt .lewa img { max-height: 180px; }
+            .modal-produkt h2 { font-size: 1.2rem; margin-bottom: 8px; }
+            .modal-produkt .kategoria { font-size: 0.6rem; margin-bottom: 5px; }
+            .modal-produkt .cena-duza { font-size: 1.3rem; margin-bottom: 12px; }
+            .modal-produkt .cena-mala { font-size: 0.9rem; margin-bottom: 10px; }
+            .modal-produkt .opis-label { font-size: 0.6rem; margin-bottom: 6px; margin-top: 8px; letter-spacing: 2px; }
+            
+            .smak-linia { padding: 5px 10px; font-size: 0.78rem; margin-bottom: 4px; }
+            .osiedle-blok { padding: 8px 10px; margin-bottom: 6px; }
+            .osiedle-naglowek { margin-bottom: 5px; padding-bottom: 5px; }
+            .osiedle-nazwa { font-size: 0.8rem; }
+            .osiedle-ilosc { font-size: 0.7rem; }
+            .smak-linia-mala { padding: 2px 0; font-size: 0.72rem; }
+            .opis-tresc { font-size: 0.75rem; line-height: 1.4; }
+            .transfer-notka { font-size: 0.7rem; line-height: 1.4; margin-top: 12px; padding-top: 10px; }
+            .btn-kup-osiedla { padding: 11px 18px; font-size: 0.75rem; margin-top: 14px; letter-spacing: 2px; }
+            
             .hero { padding: 40px 20px 40px 20px; }
             .hero h1 { font-size: 3rem; letter-spacing: 4px; }
             .hero .top-info { letter-spacing: 3px; font-size: 0.7rem; }
@@ -134,9 +154,11 @@
             .modal-gdzie h3 { font-size: 1.1rem; letter-spacing: 3px; }
             .modal-gdzie .sprzedawca { flex-direction: column; gap: 6px; text-align: center; }
 
-            .zamknij, .wroc { width: 54px; height: 54px; font-size: 2rem; }
-            .zamknij { top: 8px; right: 8px; background: rgba(255,255,255,0.15); border: 2px solid #666; }
-            .wroc { top: 8px; left: 8px; background: rgba(255,255,255,0.15); border: 2px solid #666; }
+            .zamknij, .wroc { width: 48px; height: 48px; font-size: 1.8rem; }
+            .zamknij { top: 6px; right: 6px; background: rgba(255,255,255,0.15); border: 2px solid #666; }
+            .wroc { top: 6px; left: 6px; background: rgba(255,255,255,0.15); border: 2px solid #666; }
+
+            .modal-tlo { align-items: flex-start; padding: 10px; }
         }
     </style>
 </head>
@@ -186,7 +208,6 @@
                 <div class="kategoria">Produkt</div>
                 <h2 id="mpNazwa"></h2>
 
-                <!-- WIDOK 1: smaki globalne + opis -->
                 <div class="widok aktywny" id="widokSmaki">
                     <div class="cena-duza" id="mpCena"></div>
                     <div class="opis-label">Smaki</div>
@@ -200,7 +221,6 @@
                     <button class="btn-kup-osiedla" onclick="pokazOsiedla()">Kup / Osiedla</button>
                 </div>
 
-                <!-- WIDOK 2: osiedla -->
                 <div class="widok" id="widokOsiedla">
                     <div class="cena-mala" id="mpCenaMala"></div>
                     <div class="opis-label">Osiedla</div>
@@ -293,17 +313,14 @@
             return wynik;
         }
 
-        // ===== KONTAKT =====
         function pokazKontakt() { document.getElementById('modalKontakt').classList.add('aktywny'); }
         function zamknijKontakt() { document.getElementById('modalKontakt').classList.remove('aktywny'); }
         document.getElementById('modalKontakt').addEventListener('click', function(e) { if (e.target === this) zamknijKontakt(); });
 
-        // ===== GDZIE SPRZEDAJEMY =====
         function pokazGdzie() { document.getElementById('modalGdzie').classList.add('aktywny'); }
         function zamknijGdzie() { document.getElementById('modalGdzie').classList.remove('aktywny'); }
         document.getElementById('modalGdzie').addEventListener('click', function(e) { if (e.target === this) zamknijGdzie(); });
 
-        // ===== PRODUKT =====
         function otworzProdukt(index) {
             const p = produktyGlobal[index];
             if (!p) return;
@@ -314,7 +331,6 @@
             document.getElementById('mpCena').textContent = formatujCene(dane.cena);
             document.getElementById('mpCenaMala').textContent = formatujCene(dane.cena);
 
-            // Smaki globalne
             const kontenerSmaki = document.getElementById('mpSmakiGlobalne');
             if (dane.smakiGlobalne.length === 0) {
                 kontenerSmaki.innerHTML = '<div class="osiedle-brak">Brak smaków.</div>';
@@ -325,7 +341,6 @@
                 }
             }
 
-            // Opis
             const sekcjaOpis = document.getElementById('mpOpisSekcja');
             if (dane.opis) {
                 document.getElementById('mpOpisTresc').innerHTML = dane.opis;
@@ -334,7 +349,6 @@
                 sekcjaOpis.style.display = 'none';
             }
 
-            // Osiedla
             const kontenerOs = document.getElementById('mpOsiedla');
             if (dane.osiedla.length === 0) {
                 kontenerOs.innerHTML = '<div class="osiedle-brak">Brak osiedli.</div>';
