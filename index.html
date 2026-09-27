@@ -94,6 +94,7 @@
         .modal-produkt .cena-duza { color: #fff; font-size: 1.8rem; font-weight: 800; margin-bottom: 25px; }
         .modal-produkt .opis-label { color: #666; font-size: 0.7rem; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 10px; }
         .modal-produkt .opis-tresc { color: #bbb; font-size: 0.82rem; line-height: 1.5; white-space: pre-line; font-weight: 300; word-wrap: break-word; overflow-wrap: break-word; word-break: break-word; }
+        .modal-produkt .opis-sekcja { margin-bottom: 20px; }
 
         .modal-gdzie { background: #0a0a0a; border: 1px solid #333; border-radius: 12px; padding: 45px; max-width: 600px; width: 100%; position: relative; box-shadow: 0 20px 80px rgba(0,0,0,0.9); }
         .modal-gdzie h3 { color: #fff; font-size: 1.4rem; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 4px; font-weight: 800; text-align: center; }
@@ -174,8 +175,16 @@
                 <div class="kategoria">Produkt</div>
                 <h2 id="mpNazwa"></h2>
                 <div class="cena-duza" id="mpCena"></div>
-                <div class="opis-label">Opis / Smaki / Ilość</div>
-                <div class="opis-tresc" id="mpOpis"></div>
+
+                <div id="mpOpisSekcja" class="opis-sekcja" style="display:none;">
+                    <div class="opis-label">Opis</div>
+                    <div class="opis-tresc" id="mpOpisOpis"></div>
+                </div>
+
+                <div>
+                    <div class="opis-label">Smaki / Ilość</div>
+                    <div class="opis-tresc" id="mpOpis"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -258,16 +267,51 @@
             if (!p) return;
             document.getElementById('mpZdjecie').src = p.zdjecie || '';
             document.getElementById('mpNazwa').textContent = p.nazwa;
-            document.getElementById('mpOpis').innerHTML = usunGwiazdki(p.opis).replace(/\n/g, '<br>');
+
+            const tekst = usunGwiazdki(p.opis);
+            const linie = tekst.split('\n');
+
+            // Cena
             let cena = '';
-            const linie = (p.opis || '').split('\n');
             for (const l of linie) {
                 if (l.toLowerCase().startsWith('cena:')) {
-                    cena = usunGwiazdki(l.replace(/cena:/i, '')).trim();
+                    cena = l.replace(/cena:/i, '').trim();
                     break;
                 }
             }
             document.getElementById('mpCena').textContent = formatujCene(cena);
+
+            // Opis (linie po "Opis:" do "Smaki:")
+            const idxOpis = linie.findIndex(l => l.toLowerCase().startsWith('opis:'));
+            let opisTxt = '';
+            if (idxOpis !== -1) {
+                for (let i = idxOpis + 1; i < linie.length; i++) {
+                    if (linie[i].toLowerCase().startsWith('smaki:')) break;
+                    if (linie[i].trim() === '') continue;
+                    opisTxt += (opisTxt ? '<br>' : '') + linie[i];
+                }
+            }
+
+            const sekcjaOpis = document.getElementById('mpOpisSekcja');
+            if (opisTxt) {
+                document.getElementById('mpOpisOpis').innerHTML = opisTxt;
+                sekcjaOpis.style.display = 'block';
+            } else {
+                sekcjaOpis.style.display = 'none';
+            }
+
+            // Smaki (od "Smaki:" do końca)
+            const idxSmaki = linie.findIndex(l => l.toLowerCase().startsWith('smaki:'));
+            let smakiTxt = '';
+            if (idxSmaki !== -1) {
+                for (let i = idxSmaki; i < linie.length; i++) {
+                    smakiTxt += (smakiTxt ? '<br>' : '') + linie[i];
+                }
+            } else {
+                smakiTxt = tekst.replace(/\n/g, '<br>');
+            }
+            document.getElementById('mpOpis').innerHTML = smakiTxt;
+
             document.getElementById('modalProdukt').classList.add('aktywny');
         }
 
