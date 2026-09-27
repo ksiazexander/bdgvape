@@ -22,19 +22,9 @@
         .hero .dol { color: #666; font-size: 0.9rem; letter-spacing: 1px; max-width: 650px; margin: 0 auto 25px auto; line-height: 1.6; font-weight: 300; }
 
         .btn-gdzie {
-            background: transparent;
-            color: #fff;
-            border: 1px solid #444;
-            padding: 12px 26px;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            letter-spacing: 2px;
-            cursor: pointer;
-            transition: all 0.25s;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
+            background: transparent; color: #fff; border: 1px solid #444; padding: 12px 26px; border-radius: 6px;
+            font-weight: 600; font-size: 0.9rem; letter-spacing: 2px; cursor: pointer; transition: all 0.25s;
+            display: inline-flex; align-items: center; gap: 10px;
         }
         .btn-gdzie:hover { background: #fff; color: #000; border-color: #fff; }
 
@@ -50,10 +40,7 @@
         .kafelek .tresc { padding: 16px; text-align: center; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
         .kafelek h3 { font-size: 1rem; color: #fff; font-weight: 700; margin-bottom: 10px; letter-spacing: 1px; text-transform: uppercase; line-height: 1.3; }
         .kafelek .cena { color: #fff; font-size: 1.2rem; font-weight: 800; margin-bottom: 6px; }
-        .kafelek .ilosc { color: #666; font-size: 0.8rem; margin-bottom: 10px; letter-spacing: 1px; }
-        .kafelek .smaki-lista { color: #999; font-size: 0.78rem; line-height: 1.5; margin-bottom: 14px; text-align: left; padding: 8px 10px; background: #111; border-radius: 6px; }
-        .kafelek .smaki-lista .smak-wiersz { display: flex; justify-content: space-between; }
-        .kafelek .smaki-lista .smak-wiersz span:last-child { color: #fff; font-weight: 600; }
+        .kafelek .ilosc { color: #666; font-size: 0.8rem; margin-bottom: 14px; letter-spacing: 1px; }
         .kafelek .btn-kup { background: #fff; color: #000; border: none; padding: 11px 20px; border-radius: 4px; font-weight: 700; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.2s; width: 100%; }
         .kafelek .btn-kup:hover { background: #ccc; }
 
@@ -67,27 +54,23 @@
         .modal p { color: #ccc; font-size: 1.1rem; font-weight: 500; letter-spacing: 1px; }
 
         .zamknij {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 44px;
-            height: 44px;
-            background: rgba(255,255,255,0.08);
-            border: 1px solid #444;
-            border-radius: 50%;
-            color: #fff;
-            font-size: 1.6rem;
-            line-height: 1;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-            z-index: 10;
-            padding: 0;
-            font-weight: 300;
+            position: absolute; top: 10px; right: 10px; width: 44px; height: 44px;
+            background: rgba(255,255,255,0.08); border: 1px solid #444; border-radius: 50%;
+            color: #fff; font-size: 1.6rem; line-height: 1; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s; z-index: 10; padding: 0; font-weight: 300;
         }
         .zamknij:hover { background: #fff; color: #000; border-color: #fff; }
+
+        /* Strzałka powrotu */
+        .wroc {
+            position: absolute; top: 10px; left: 10px; width: 44px; height: 44px;
+            background: rgba(255,255,255,0.08); border: 1px solid #444; border-radius: 50%;
+            color: #fff; font-size: 1.4rem; line-height: 1; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s; z-index: 10; padding: 0; font-weight: 300;
+        }
+        .wroc:hover { background: #fff; color: #000; border-color: #fff; }
 
         .modal-produkt { background: #0a0a0a; border: 1px solid #333; border-radius: 12px; max-width: 900px; width: 100%; padding: 40px; position: relative; box-shadow: 0 20px 80px rgba(0,0,0,0.9); display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
         .modal-produkt .lewa img { width: 100%; border-radius: 8px; background: #141414; object-fit: cover; max-height: 400px; }
@@ -95,19 +78,39 @@
         .modal-produkt .kategoria { color: #666; font-size: 0.7rem; letter-spacing: 5px; text-transform: uppercase; margin-bottom: 10px; }
         .modal-produkt h2 { font-size: 2rem; font-weight: 800; color: #fff; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 15px; line-height: 1.1; word-break: break-word; }
         .modal-produkt .cena-duza { color: #fff; font-size: 1.8rem; font-weight: 800; margin-bottom: 25px; }
+        .modal-produkt .cena-mala { color: #fff; font-size: 1.1rem; font-weight: 700; margin-bottom: 20px; }
         .modal-produkt .opis-label { color: #666; font-size: 0.7rem; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 12px; }
 
+        /* Lista smaków (widok 1) */
+        .smak-linia { display: flex; justify-content: space-between; padding: 8px 12px; background: #111; border-radius: 6px; margin-bottom: 6px; font-size: 0.9rem; }
+        .smak-linia .smak-nazwa { color: #ccc; }
+        .smak-linia .smak-ilosc { color: #fff; font-weight: 700; }
+
+        /* Lista osiedli (widok 2) */
         .osiedle-blok { background: #111; border: 1px solid #1f1f1f; border-radius: 8px; padding: 12px 15px; margin-bottom: 10px; }
         .osiedle-naglowek { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid #1f1f1f; }
         .osiedle-nazwa { color: #fff; font-weight: 700; font-size: 0.9rem; letter-spacing: 1px; }
         .osiedle-ilosc { color: #888; font-size: 0.8rem; letter-spacing: 1px; font-weight: 600; }
-        .smak-linia { display: flex; justify-content: space-between; padding: 3px 0; font-size: 0.82rem; color: #bbb; }
-        .smak-linia .smak-nazwa { color: #ccc; }
-        .smak-linia .smak-ilosc { color: #fff; font-weight: 600; }
-        .osiedle-brak { color: #666; font-size: 0.8rem; font-style: italic; }
+        .smak-linia-mala { display: flex; justify-content: space-between; padding: 3px 0; font-size: 0.82rem; }
+        .smak-linia-mala .smak-nazwa { color: #bbb; }
+        .smak-linia-mala .smak-ilosc { color: #fff; font-weight: 600; }
+        .osiedle-brak { color: #666; font-size: 0.85rem; font-style: italic; padding: 8px 0; }
+
+        /* Przycisk Kup / Osiedla w modalu */
+        .btn-kup-osiedla {
+            margin-top: 25px; background: #fff; color: #000; border: none;
+            padding: 14px 24px; border-radius: 4px; font-weight: 700; font-size: 0.85rem;
+            letter-spacing: 3px; text-transform: uppercase; cursor: pointer;
+            transition: all 0.2s; width: 100%;
+        }
+        .btn-kup-osiedla:hover { background: #ccc; }
 
         .transfer-notka { margin-top: 20px; padding-top: 18px; border-top: 1px solid #1f1f1f; color: #999; font-size: 0.78rem; line-height: 1.6; text-align: left; font-weight: 300; }
         .transfer-notka b { color: #fff; font-weight: 600; }
+
+        /* Widoki w modalu */
+        .widok { display: none; }
+        .widok.aktywny { display: block; }
 
         .modal-gdzie { background: #0a0a0a; border: 1px solid #333; border-radius: 12px; padding: 45px; max-width: 600px; width: 100%; position: relative; box-shadow: 0 20px 80px rgba(0,0,0,0.9); }
         .modal-gdzie h3 { color: #fff; font-size: 1.4rem; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 4px; font-weight: 800; text-align: center; }
@@ -133,15 +136,9 @@
             .modal-gdzie h3 { font-size: 1.1rem; letter-spacing: 3px; }
             .modal-gdzie .sprzedawca { flex-direction: column; gap: 6px; text-align: center; }
 
-            .zamknij {
-                width: 54px;
-                height: 54px;
-                font-size: 2.2rem;
-                top: 8px;
-                right: 8px;
-                background: rgba(255,255,255,0.15);
-                border: 2px solid #666;
-            }
+            .zamknij, .wroc { width: 54px; height: 54px; font-size: 2rem; }
+            .zamknij { top: 8px; right: 8px; background: rgba(255,255,255,0.15); border: 2px solid #666; }
+            .wroc { top: 8px; left: 8px; background: rgba(255,255,255,0.15); border: 2px solid #666; }
         }
     </style>
 </head>
@@ -178,24 +175,36 @@
         </div>
     </div>
 
+    <!-- MODAL PRODUKTU (2 widoki) -->
     <div class="modal-tlo" id="modalProdukt">
         <div class="modal-produkt">
             <button class="zamknij" onclick="zamknijProdukt()">×</button>
+            <button class="wroc" id="btnWroc" onclick="wrocDoSmakow()" style="display:none;">←</button>
+
             <div class="lewa">
                 <img id="mpZdjecie" src="" alt="">
             </div>
+
             <div class="prawa">
                 <div class="kategoria">Produkt</div>
                 <h2 id="mpNazwa"></h2>
-                <div class="cena-duza" id="mpCena"></div>
 
-                <div>
-                    <div class="opis-label">Dostępność w osiedlach</div>
-                    <div id="mpOsiedla"></div>
+                <!-- WIDOK 1: smaki globalne -->
+                <div class="widok aktywny" id="widokSmaki">
+                    <div class="cena-duza" id="mpCena"></div>
+                    <div class="opis-label">Smaki</div>
+                    <div id="mpSmakiGlobalne"></div>
+                    <button class="btn-kup-osiedla" onclick="pokazOsiedla()">Kup / Osiedla</button>
                 </div>
 
-                <div class="transfer-notka">
-                    <b>Transfer?</b> Twój najbliższy sprzedawca nie ma jakiegoś smaku, a nie chce Ci się iść na inne osiedle? Zapytaj o transfer (przekazanie produktu z jednego osiedla na drugie).
+                <!-- WIDOK 2: osiedla -->
+                <div class="widok" id="widokOsiedla">
+                    <div class="cena-mala" id="mpCenaMala"></div>
+                    <div class="opis-label">Osiedla</div>
+                    <div id="mpOsiedla"></div>
+                    <div class="transfer-notka">
+                        <b>Transfer?</b> Twój najbliższy sprzedawca nie ma jakiegoś smaku, a nie chce Ci się iść na inne osiedle? Zapytaj o transfer (przekazanie produktu z jednego osiedla na drugie).
+                    </div>
                 </div>
             </div>
         </div>
@@ -236,13 +245,14 @@
             return c + ' zł';
         }
 
-        // Parsuje embed z Discorda
+        // Parsuje embed
         function parsujProdukt(opis) {
             const tekst = usunGwiazdki(opis || '');
             const linie = tekst.split('\n');
-            const wynik = { cena: '', ilosc: '', smaki: [], osiedla: [] };
+            const wynik = { cena: '', ilosc: '', smakiGlobalne: [], osiedla: [] };
 
             let tryb = 'glowny';
+            let aktualneOsiedle = null;
 
             for (const l of linie) {
                 const lower = l.toLowerCase().trim();
@@ -253,20 +263,28 @@
                     wynik.ilosc = l.replace(/[^:]+:/, '').replace('szt.', '').trim();
                 } else if (lower === 'smaki:') {
                     tryb = 'smaki';
+                    aktualneOsiedle = null;
                 } else if (lower === 'osiedla:') {
                     tryb = 'osiedla';
+                    aktualneOsiedle = null;
                 } else if (lower === 'opis:') {
                     tryb = 'opis';
                 } else if (tryb === 'smaki') {
                     // Format: • Mango — 3 szt.
                     const m = l.match(/•\s*(.+?)\s*—\s*(\d+)\s*szt\./);
-                    if (m) wynik.smaki.push({ nazwa: m[1].trim(), ilosc: parseInt(m[2]) || 0 });
+                    if (m) wynik.smakiGlobalne.push({ nazwa: m[1].trim(), ilosc: parseInt(m[2]) || 0 });
                 } else if (tryb === 'osiedla') {
                     // Format: 🏠 OSG — 7 szt.
-                    const m = l.match(/🏠\s*(.+?)\s*—\s*(\d+)\s*szt\./);
-                    if (m) wynik.osiedla.push({ nazwa: m[1].trim(), ilosc: parseInt(m[2]) || 0, smaki: [] });
+                    const mOs = l.match(/🏠\s*(.+?)\s*—\s*(\d+)\s*szt\./);
+                    if (mOs) {
+                        aktualneOsiedle = { nazwa: mOs[1].trim(), ilosc: parseInt(mOs[2]) || 0, smaki: [] };
+                        wynik.osiedla.push(aktualneOsiedle);
+                    } else if (aktualneOsiedle) {
+                        // Smak w osiedlu: • Mango — 3 szt.
+                        const mSm = l.match(/•\s*(.+?)\s*—\s*(\d+)\s*szt\./);
+                        if (mSm) aktualneOsiedle.smaki.push({ nazwa: mSm[1].trim(), ilosc: parseInt(mSm[2]) || 0 });
+                    }
                 }
-                // tryb 'opis' pomijamy – nie wyświetlamy na stronie
             }
 
             return wynik;
@@ -291,26 +309,64 @@
             document.getElementById('mpZdjecie').src = p.zdjecie || '';
             document.getElementById('mpNazwa').textContent = p.nazwa;
             document.getElementById('mpCena').textContent = formatujCene(dane.cena);
+            document.getElementById('mpCenaMala').textContent = formatujCene(dane.cena);
 
-            const kontener = document.getElementById('mpOsiedla');
-            if (dane.osiedla.length === 0) {
-                kontener.innerHTML = '<div class="osiedle-brak">Brak dostępności w osiedlach.</div>';
+            // Smaki globalne
+            const kontenerSmaki = document.getElementById('mpSmakiGlobalne');
+            if (dane.smakiGlobalne.length === 0) {
+                kontenerSmaki.innerHTML = '<div class="osiedle-brak">Brak smaków.</div>';
             } else {
-                kontener.innerHTML = '';
+                kontenerSmaki.innerHTML = '';
+                for (const s of dane.smakiGlobalne) {
+                    kontenerSmaki.innerHTML += `<div class="smak-linia"><span class="smak-nazwa">${s.nazwa}</span><span class="smak-ilosc">${s.ilosc} szt.</span></div>`;
+                }
+            }
+
+            // Osiedla
+            const kontenerOs = document.getElementById('mpOsiedla');
+            if (dane.osiedla.length === 0) {
+                kontenerOs.innerHTML = '<div class="osiedle-brak">Brak osiedli.</div>';
+            } else {
+                kontenerOs.innerHTML = '';
                 for (const os of dane.osiedla) {
-                    kontener.innerHTML += `
+                    let smakiHtml = '';
+                    if (os.smaki.length > 0) {
+                        for (const s of os.smaki) {
+                            smakiHtml += `<div class="smak-linia-mala"><span class="smak-nazwa">• ${s.nazwa}</span><span class="smak-ilosc">${s.ilosc} szt.</span></div>`;
+                        }
+                    } else {
+                        smakiHtml = '<div class="osiedle-brak">brak smaków</div>';
+                    }
+                    kontenerOs.innerHTML += `
                         <div class="osiedle-blok">
                             <div class="osiedle-naglowek">
                                 <span class="osiedle-nazwa">🏠 ${os.nazwa}</span>
                                 <span class="osiedle-ilosc">${os.ilosc} szt.</span>
                             </div>
-                            <div class="osiedle-brak">(szczegóły smaków u sprzedawcy)</div>
+                            ${smakiHtml}
                         </div>
                     `;
                 }
             }
 
+            // Zawsze startuj od widoku smaków
+            document.getElementById('widokSmaki').classList.add('aktywny');
+            document.getElementById('widokOsiedla').classList.remove('aktywny');
+            document.getElementById('btnWroc').style.display = 'none';
+
             document.getElementById('modalProdukt').classList.add('aktywny');
+        }
+
+        function pokazOsiedla() {
+            document.getElementById('widokSmaki').classList.remove('aktywny');
+            document.getElementById('widokOsiedla').classList.add('aktywny');
+            document.getElementById('btnWroc').style.display = 'flex';
+        }
+
+        function wrocDoSmakow() {
+            document.getElementById('widokSmaki').classList.add('aktywny');
+            document.getElementById('widokOsiedla').classList.remove('aktywny');
+            document.getElementById('btnWroc').style.display = 'none';
         }
 
         function zamknijProdukt() { document.getElementById('modalProdukt').classList.remove('aktywny'); }
@@ -334,17 +390,6 @@
                 }
                 produkty.forEach((produkt, index) => {
                     const dane = parsujProdukt(produkt.opis);
-
-                    // Lista smaków globalnych w kafelku
-                    let smakiHtml = '';
-                    if (dane.smaki.length > 0) {
-                        smakiHtml = '<div class="smaki-lista">';
-                        for (const s of dane.smaki) {
-                            smakiHtml += `<div class="smak-wiersz"><span>${s.nazwa}</span><span>${s.ilosc} szt.</span></div>`;
-                        }
-                        smakiHtml += '</div>';
-                    }
-
                     katalog.innerHTML += `
                         <div class="kafelek">
                             ${produkt.zdjecie ? `<img src="${produkt.zdjecie}" alt="${produkt.nazwa}" class="zdjecie">` : '<div class="zdjecie"></div>'}
@@ -352,8 +397,7 @@
                                 <h3>${produkt.nazwa}</h3>
                                 <div class="cena">${formatujCene(dane.cena)}</div>
                                 <div class="ilosc">Dostępne: ${dane.ilosc || '0'} szt.</div>
-                                ${smakiHtml}
-                                <button class="btn-kup" onclick="otworzProdukt(${index})">Kup / Osiedla</button>
+                                <button class="btn-kup" onclick="otworzProdukt(${index})">Smaki</button>
                             </div>
                         </div>
                     `;
