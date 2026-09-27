@@ -95,7 +95,6 @@
         .modal-produkt .opis-label { color: #666; font-size: 0.7rem; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 10px; }
         .modal-produkt .opis-tresc { color: #bbb; font-size: 0.95rem; line-height: 1.7; white-space: pre-line; font-weight: 300; }
 
-        /* ===== MODAL GDZIE SPRZEDAJEMY ===== */
         .modal-gdzie { background: #0a0a0a; border: 1px solid #333; border-radius: 12px; padding: 45px; max-width: 600px; width: 100%; position: relative; box-shadow: 0 20px 80px rgba(0,0,0,0.9); }
         .modal-gdzie h3 { color: #fff; font-size: 1.4rem; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 4px; font-weight: 800; text-align: center; }
         .modal-gdzie .podtytul { color: #777; font-size: 0.8rem; letter-spacing: 1px; text-align: center; margin-bottom: 30px; font-weight: 300; }
@@ -212,6 +211,15 @@
             return (tekst || '').replace(/\*\*/g, '');
         }
 
+        // Formatuje cenę: jeśli nie ma "zł", dodaje " zł"
+        function formatujCene(cena) {
+            if (!cena || cena === '—') return '—';
+            const c = String(cena).trim();
+            // Jeśli już zawiera "zł" (gdziekolwiek), zostaw
+            if (/zł/i.test(c)) return c;
+            return c + ' zł';
+        }
+
         // ===== KONTAKT =====
         function pokazKontakt() { document.getElementById('modalKontakt').classList.add('aktywny'); }
         function zamknijKontakt() { document.getElementById('modalKontakt').classList.remove('aktywny'); }
@@ -237,7 +245,7 @@
                     break;
                 }
             }
-            document.getElementById('mpCena').textContent = cena || '—';
+            document.getElementById('mpCena').textContent = formatujCene(cena);
             document.getElementById('modalProdukt').classList.add('aktywny');
         }
 
@@ -272,7 +280,7 @@
                             ${produkt.zdjecie ? `<img src="${produkt.zdjecie}" alt="${produkt.nazwa}" class="zdjecie">` : '<div class="zdjecie"></div>'}
                             <div class="tresc">
                                 <h3>${produkt.nazwa}</h3>
-                                <div class="cena">${cena}</div>
+                                <div class="cena">${formatujCene(cena)}</div>
                                 <div class="ilosc">Dostępne: ${ilosc}</div>
                                 <button class="btn-kup" onclick="otworzProdukt(${index})">Kup / Smaki</button>
                             </div>
