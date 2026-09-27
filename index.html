@@ -36,7 +36,14 @@
             text-shadow: 0 0 40px rgba(255,255,255,0.15), 0 0 80px rgba(255,255,255,0.05);
             white-space: nowrap;
         }
-        .hero .gif-duck { height: 110px; width: auto; border-radius: 10px; flex-shrink: 0; }
+        .hero .film {
+            height: 120px;
+            width: auto;
+            border-radius: 10px;
+            flex-shrink: 0;
+            object-fit: cover;
+            display: block;
+        }
         
         .hero .opis { font-size: 1.1rem; color: #bbb; max-width: 650px; margin: 0 auto 6px auto; line-height: 1.6; font-weight: 300; }
         .hero .dol { color: #666; font-size: 0.9rem; letter-spacing: 1px; max-width: 650px; margin: 0 auto 25px auto; line-height: 1.6; font-weight: 300; }
@@ -256,7 +263,7 @@
             .hero { padding: 40px 20px 40px 20px; }
             .hero .tytul-z-gifem { gap: 10px; flex-wrap: nowrap; }
             .hero h1 { font-size: 1.8rem; letter-spacing: 2px; }
-            .hero .gif-duck { height: 50px; }
+            .hero .film { height: 55px; }
             .hero .top-info { letter-spacing: 3px; font-size: 0.7rem; }
             .sekcja { padding: 40px 20px 60px 20px; }
             .sekcja h2 { font-size: 1.5rem; letter-spacing: 2px; }
@@ -286,7 +293,9 @@
         
         <div class="tytul-z-gifem">
             <h1>BDGVAPE</h1>
-            <img class="gif-duck" src="https://media.discordapp.net/attachments/1553798187205267456/1553858362368860311/ChatGPT_Image_27_wrz_2026_21_58_10.png?ex=6abac6de&is=6ab9755e&hm=7d99948d62bb876ccf75edf4252efca6dba3485c53f512d4e0e95ce2a050b96a&=&format=webp&quality=lossless&width=1280&height=972" alt="BDGVAPE grafika">
+            <video class="film" autoplay loop muted playsinline>
+                <source src="https://cdn.discordapp.com/attachments/1553798187205267456/1553861915673894942/4ad12a01-cd73-4368-9a94-02f7d7ef4c35.mp4?ex=6abaca2e&is=6ab978ae&hm=208288f39f254d146308952970195f8115e6c13391104b40066ffe672107bcba&" type="video/mp4">
+            </video>
         </div>
         
         <p class="opis">Twój nowy sklep z jednorazówkami / liquidami w Bydgoszczy.</p>
