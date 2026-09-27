@@ -281,7 +281,7 @@
             }
             document.getElementById('mpCena').textContent = formatujCene(cena);
 
-            // Opis (linie po "Opis:" do "Smaki:")
+            // Opis (linie po "Opis:" do "Smaki:" lub do końca)
             const idxOpis = linie.findIndex(l => l.toLowerCase().startsWith('opis:'));
             let opisTxt = '';
             if (idxOpis !== -1) {
@@ -300,11 +300,12 @@
                 sekcjaOpis.style.display = 'none';
             }
 
-            // Smaki (od "Smaki:" do końca)
+            // Smaki (od "Smaki:" do "Opis:" lub do końca)
             const idxSmaki = linie.findIndex(l => l.toLowerCase().startsWith('smaki:'));
             let smakiTxt = '';
             if (idxSmaki !== -1) {
                 for (let i = idxSmaki; i < linie.length; i++) {
+                    if (linie[i].toLowerCase().startsWith('opis:')) break;
                     smakiTxt += (smakiTxt ? '<br>' : '') + linie[i];
                 }
             } else {
