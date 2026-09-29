@@ -67,6 +67,9 @@
         .kafelek .tresc { padding: 16px; text-align: center; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
         .kafelek h3 { font-size: 1rem; color: #fff; font-weight: 700; margin-bottom: 10px; letter-spacing: 1px; text-transform: uppercase; line-height: 1.3; }
         .kafelek .cena { color: #fff; font-size: 1.2rem; font-weight: 800; margin-bottom: 6px; }
+        .kafelek .cena-promo { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 6px; }
+        .kafelek .cena-promo .cena-nowa { color: #fff; font-size: 1.2rem; font-weight: 800; }
+        .kafelek .cena-promo .cena-stara { color: #666; font-size: 1rem; font-weight: 600; text-decoration: line-through; }
         .kafelek .ilosc { color: #666; font-size: 0.8rem; margin-bottom: 14px; letter-spacing: 1px; }
         .kafelek .btn-kup { background: #fff; color: #000; border: none; padding: 11px 20px; border-radius: 4px; font-weight: 700; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.2s; width: 100%; }
         .kafelek .btn-kup:hover { background: #ccc; }
@@ -195,6 +198,8 @@
             .kafelek .tresc { padding: 12px; }
             .kafelek h3 { font-size: 0.9rem; margin-bottom: 6px; }
             .kafelek .cena { font-size: 1.1rem; margin-bottom: 4px; }
+            .kafelek .cena-promo .cena-nowa { font-size: 1.1rem; }
+            .kafelek .cena-promo .cena-stara { font-size: 0.85rem; }
             .kafelek .ilosc { font-size: 0.75rem; margin-bottom: 10px; }
             .kafelek .btn-kup { padding: 10px 16px; font-size: 0.75rem; }
 
@@ -256,7 +261,7 @@
         
         <div class="tytul-z-gifem">
             <h1>BDGVAPE</h1>
-            <img class="film" src="https://media.discordapp.net/attachments/1553798187205267456/1553872991249764462/bdgvape.png?ex=6abad47e&is=6ab982fe&hm=1bf77c47cb63586efe9b29e517c0bcfba3509fb55b8ac6166664db4d2693dfc7&=&format=webp&quality=lossless&width=1280&height=972" alt="BDGVAPE">
+            <img class="film" src="https://media.discordapp.net/attachments/1554528546376908911/1554528576554926240/bdgvape.png?ex=6abd370e&is=6abbe58e&hm=0ef77edfe2abd4e3fffeba53f4ee0237e69f4e8ba8ffc093915871e4b4144cc3&=&format=webp&quality=lossless&width=512&height=389" alt="BDGVAPE">
         </div>
         
         <p class="opis">Twój nowy sklep z jednorazówkami / liquidami w Bydgoszczy.</p>
@@ -515,12 +520,20 @@
                     const dane = parsujProdukt(produkt.opis);
                     const iloscGlobalna = dane.smakiGlobalne.reduce((a, b) => a + b.ilosc, 0);
 
+                    // Pierwszy kafelek – dodaj przekreśloną cenę 60 zł
+                    let cenaHtml;
+                    if (index === 0) {
+                        cenaHtml = `<div class="cena-promo"><span class="cena-nowa">${formatujCene(dane.cena)}</span><span class="cena-stara">60 zł</span></div>`;
+                    } else {
+                        cenaHtml = `<div class="cena">${formatujCene(dane.cena)}</div>`;
+                    }
+
                     katalog.innerHTML += `
                         <div class="kafelek">
                             ${produkt.zdjecie ? `<img src="${produkt.zdjecie}" alt="${produkt.nazwa}" class="zdjecie">` : '<div class="zdjecie"></div>'}
                             <div class="tresc">
                                 <h3>${produkt.nazwa}</h3>
-                                <div class="cena">${formatujCene(dane.cena)}</div>
+                                ${cenaHtml}
                                 <div class="ilosc">Dostępne: ${iloscGlobalna} szt.</div>
                                 <button class="btn-kup" onclick="otworzProdukt(${index})">Smaki</button>
                             </div>
